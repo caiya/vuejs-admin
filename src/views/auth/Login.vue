@@ -1,14 +1,11 @@
 <template>
     <div class="loginPage">
-        <!-- <h1>登录</h1> -->
         <el-form label="user">
             <el-form-item label="用户名">
-                <el-input v-model="form.username" type="text" id="user" @blur="inputBlur('user', form.username)"></el-input>
-                <p>{{form.userError}}</p>
+                <el-input v-model="username" type="text" id="user" @blur="inputBlur()"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password" type="password" id="pass" @blur="inputBlur('pass', form.password)"></el-input>
-                <p>{{form.passError}}</p>
+                <el-input v-model="password" type="password" id="pass" @blur="inputBlur()"></el-input>
             </el-form-item>
             <el-button type="primary" @click="submitForm()">登录</el-button>
             <el-button type="info" @click="clearForm()">重置</el-button>
@@ -21,29 +18,30 @@ export default {
   name: "Login",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      form: {
-        username: "",
-        password: "",
-        userError: "",
-        passError: ""
-      }
+      username: "",
+      password: "",
+      isPass: false
     };
   },
   methods: {
     inputBlur() {
-      console.log("blur");
+      if (!this.username.trim() || !this.password.trim()) {
+        this.isPass = false;
+        return this.$message({
+          message: "用户名或密码不能为空",
+          type: "warning"
+        });
+      }
+      this.isPass = true;
     },
     submitForm() {
-      console.log("当前提交：", this.form.username, this.form.password);
+      this.inputBlur();
+      if (!this.isPass) return;
     },
     clearForm() {
-      this.form = {
-        username: "",
-        password: "",
-        userError: "",
-        passError: ""
-      };
+      this.username = "";
+      this.password = "";
+      this.isPass = false;
     }
   }
 };
@@ -70,8 +68,6 @@ body {
   -ms-box-orient: horizontal;
   -ms-box-pack: center;
   display: box;
-  box-orient: horizontal;
-  box-pack: center;
   min-height: 300px;
 }
 .el-form {
@@ -80,6 +76,9 @@ body {
 }
 .el-form-item {
   margin-bottom: 0%;
+}
+.el-button {
+  margin-top: 20px;
 }
 </style>
 
