@@ -59,7 +59,7 @@ body {
   padding: 0;
 }
 .loginPage {
-  margin-top: 100px;
+  margin-top: 20%;
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   -webkit-box-pack: center;

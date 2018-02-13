@@ -36,7 +36,7 @@ h2 {
   border-radius: 4px;
   min-height: 75px;
 }
-.bg-purple{
+.bg-purple {
   background: coral;
 }
 </style>
