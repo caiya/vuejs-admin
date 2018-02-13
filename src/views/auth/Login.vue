@@ -1,19 +1,23 @@
 <template>
   <div class="loginPage">
-    <el-row>
-      <el-col :span="24">
-        <el-form label="user">
-          <el-form-item label="用户名">
-            <el-input v-model="username" type="text" id="user"></el-input>
-          </el-form-item>
-          <el-form-item label="密码">
-            <el-input v-model="password" type="password" id="pass"></el-input>
-          </el-form-item>
-          <el-button type="primary" @click="submitForm()">登录</el-button>
-          <el-button type="info" @click="clearForm()">重置</el-button>
-        </el-form>
-      </el-col>
-    </el-row>
+    <div class="form">
+      <el-row>
+        <el-col :span="24">
+          <el-form label="user" :label-position="labelPosition" label-width="100px">
+            <el-form-item label="用户名">
+              <el-input v-model="username" type="text" id="user"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input v-model="password" type="password" id="pass"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+              <el-button type="primary" @click="submitForm()">登录</el-button>
+              <el-button type="info" @click="clearForm()">重置</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -24,7 +28,8 @@ export default {
     return {
       username: "",
       password: "",
-      isPass: false
+      isPass: false,
+      labelPosition: 'right'
     };
   },
   methods: {
@@ -53,36 +58,22 @@ export default {
 </script>
 
 <style scoped>
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
 .loginPage {
-  margin-top: 20%;
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-pack: center;
-  display: -moz-box;
-  -moz-box-orient: horizontal;
-  -moz-box-pack: center;
-  display: -o-box;
-  -o-box-orient: horizontal;
-  -o-box-pack: center;
-  display: -ms-box;
-  -ms-box-orient: horizontal;
-  -ms-box-pack: center;
-  display: box;
-  min-height: 300px;
+  width: 100%;
+  height: 100%;
+  background-image: url(http://img2.imgtn.bdimg.com/it/u=3326912452,3636229800&fm=214&gp=0.jpg);
+  background-size: auto; 
 }
-.el-form {
-  width: 350px;
-  min-height: 300px;
+.form{
+  position: absolute;
+  width: 450px;
+  height: 350px;
+  top: 50%;
+  left: 50%;
+  margin-left: -225px;
+  margin-top: -175px;
 }
-.el-form-item {
-  margin-bottom: 0%;
-}
-.el-button {
+.el-button{
   margin-top: 20px;
 }
 </style>
