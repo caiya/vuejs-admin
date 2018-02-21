@@ -23,8 +23,14 @@
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-message"></i>文章管理</template>
-            <el-menu-item index="1-1">新增文章</el-menu-item>
-            <el-menu-item index="1-2">文章列表</el-menu-item>
+            <el-menu-item index="2-2" route="/main/article">文章列表</el-menu-item>
+            <el-menu-item index="2-1" route="/main/article/add">新增文章</el-menu-item>
+          </el-submenu>
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-mobile-phone"></i>设备管理</template>
+            <el-menu-item index="3-2" route="/main/device">设备列表</el-menu-item>
+            <el-menu-item index="3-1" route="/main/device/add">新增设备</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
