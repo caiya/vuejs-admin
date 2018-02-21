@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: "User",
+  name: "UserList",
   data() {
       return {
-          msg: '这是user页面'
+          msg: '这是user列表页'
       }
   }
 };
