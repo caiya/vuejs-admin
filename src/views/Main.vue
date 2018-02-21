@@ -16,29 +16,29 @@
         <el-menu :default-openeds="['1']">
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-message"></i>系统设置</template>
-            <el-menu-item index="1-1">用户管理</el-menu-item>
+              <i class="el-icon-setting"></i>系统设置</template>
+            <el-menu-item index="1-1" route="/main/user">用户管理</el-menu-item>
             <el-menu-item index="1-2">资料设置</el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-message"></i>文章管理</template>
+            <el-menu-item index="1-1">新增文章</el-menu-item>
+            <el-menu-item index="1-2">文章列表</el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
       <el-main>
         <el-container>
-          <el-header style="" class="navBar">
+          <el-header style="height:10px;" class="navBar">
             <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+              <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item>欢迎页</el-breadcrumb-item>
             </el-breadcrumb>
           </el-header>
           <el-main>
-            <el-table :data="tableData">
-              <el-table-column prop="date" label="日期" width="140">
-              </el-table-column>
-              <el-table-column prop="name" label="姓名" width="120">
-              </el-table-column>
-              <el-table-column prop="address" label="地址">
-              </el-table-column>
-            </el-table>
+            这里是主页内容
+            <router-view />
           </el-main>
         </el-container>
       </el-main>
@@ -64,7 +64,6 @@
 .navBar{
   background-color: #fff;
 }
-
 </style>
 
 <script>
@@ -79,6 +78,11 @@ export default {
     return {
       tableData: Array(10).fill(item)
     };
+  },
+  methods: {
+    selectOne(row, column, cell, event) {
+      console.log(row.name);
+    }
   }
 };
 </script>
