@@ -1,26 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/views/auth/Login'
-import Main from '@/views/Main'
-import User from '@/views/user/User'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: resolve => require(['@/views/auth/Login'], resolve)
     },
     {
       path: '/main',
       name: 'Main',
-      component: Main,
+      component: resolve => require(['@/views/Main'], resolve),
       children: [{
-        path: '/user',
-        component: User,
-        name: 'User'
+        path: 'user',
+        component: resolve => require(['@/views/user/List'], resolve),
+        name: 'UserList'
+      }, {
+        path: 'user/setting',
+        name: 'Setting',
+        component: resolve => require(['@/views/user/Setting'], resolve),
       }]
     }
   ]

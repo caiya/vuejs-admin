@@ -1,11 +1,11 @@
 <template>
     <div>
-        这是user页面
+        Setting Page
     </div>
 </template>
 
 <script>
 export default {
-  name: "User"
-};
+  name: 'Setting'
+}
 </script>

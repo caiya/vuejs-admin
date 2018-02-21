@@ -13,12 +13,12 @@
     </el-header>
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246);height:100%;">
-        <el-menu :default-openeds="['1']">
+        <el-menu :default-openeds="['1']" :unique-opened=true router="true">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-setting"></i>系统设置</template>
             <el-menu-item index="1-1" route="/main/user">用户管理</el-menu-item>
-            <el-menu-item index="1-2">资料设置</el-menu-item>
+            <el-menu-item index="1-2" route="/main/user/setting">资料设置</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title">
@@ -37,7 +37,6 @@
             </el-breadcrumb>
           </el-header>
           <el-main>
-            这里是主页内容
             <router-view />
           </el-main>
         </el-container>
@@ -45,7 +44,7 @@
     </el-container>
     <el-container>
       <el-main>
-        © Copyright: 2018-2022 <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州.</a>
+        © copyright: 2017-2018 <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
       </el-main>
     </el-container>
   </el-container>
