@@ -60,7 +60,21 @@ export default {
       });
   },
   methods: {
-    onSubmit() {},
+    onSubmit() {
+      const keys = Object.keys(this.formInline);
+      const query = {};
+      keys.forEach(key => {
+        this.formInline[key] && (query[key] = (this.formInline[key] + '').trim());
+      });
+      getUserList(query)
+        .then(res => {
+          this.tableData = res.rows;
+          this.total = this.tableData.length;
+        })
+        .catch(err => {
+          this.$message.error(err.message);
+        });
+    },
     formatIsAdmin(row, column, cellValue) {
       return cellValue ? "是" : "否";
     },
