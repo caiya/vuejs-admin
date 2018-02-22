@@ -1,16 +1,18 @@
 import * as TYPES from '../mutation.types'
 
 const state = {
-    user: {},
-    token: ''
+    userInfo: localStorage.getItem('userInfo') || {},
+    token: localStorage.getItem('token') || ''
 }
 
 const actions = {}
 
 const mutations = {
     [TYPES.LOGIN]: (state, loginData) => {
-        state.user = loginData.user
+        state.userInfo = loginData.user
         state.token = loginData.token
+        localStorage.setItem('userInfo', JSON.stringify(loginData.user))
+        localStorage.setItem('token', loginData.token)
     }
 }
 

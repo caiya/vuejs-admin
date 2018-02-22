@@ -57,7 +57,6 @@ export default {
             this.LOGIN(res.data)
             this.$router.push("/main")
           } else {    // 登陆失败
-            console.log(11111)
             this.$message.error(res.error)
           }
       }).catch(err => {
