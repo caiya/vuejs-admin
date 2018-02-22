@@ -4,10 +4,10 @@
       <el-row>
         <el-col :span="24">
           <el-form label="email" :label-position="labelPosition" label-width="100px">
-            <el-form-item label="邮箱">
+            <el-form-item label="邮 箱">
               <el-input v-model="email" type="text" id="email"></el-input>
             </el-form-item>
-            <el-form-item label="密码" style="color: #fff;">
+            <el-form-item label="密 码" style="color: #fff;">
               <el-input v-model="password" type="password" id="pass"></el-input>
             </el-form-item>
             <el-form-item label="">

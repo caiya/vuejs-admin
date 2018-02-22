@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Main",
   data() {
@@ -80,16 +80,19 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['LOGOUT']),
     selectOne(row, column, cell, event) {
-      console.log(row.name);
+      // console.log(row.name)
     },
     clickItem(command) {
       command = parseInt(command);
       switch (command) {
-        case 0:
+        case 0:     // 关于我
           this.centerDialogVisible = true;
           break;
-        case 1:
+        case 1:     // 退出登录
+          this.LOGOUT()
+          this.$router.push('/')
           break;
       }
     }
