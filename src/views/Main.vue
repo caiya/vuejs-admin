@@ -13,7 +13,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246);height:100%;">
-        <el-menu :default-openeds="['1']" router="true">
+        <el-menu :default-openeds="['1']" :router="true">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-setting"></i>系统设置</template>

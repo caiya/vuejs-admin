@@ -3,9 +3,9 @@
     <div class="form">
       <el-row>
         <el-col :span="24">
-          <el-form label="user" :label-position="labelPosition" label-width="100px">
-            <el-form-item label="用户名">
-              <el-input v-model="username" type="text" id="user"></el-input>
+          <el-form label="email" :label-position="labelPosition" label-width="100px">
+            <el-form-item label="邮箱">
+              <el-input v-model="email" type="text" id="email"></el-input>
             </el-form-item>
             <el-form-item label="密码" style="color: #fff;">
               <el-input v-model="password" type="password" id="pass"></el-input>
@@ -22,19 +22,21 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: "Login",
   data() {
     return {
-      username: "",
+      email: "",
       password: "",
       isPass: false,
       labelPosition: 'right'
     };
   },
   methods: {
+    ...mapMutations(['LOGIN']),
     inputBlur() {
-      if (!this.username.trim() || !this.password.trim()) {
+      if (!this.email.trim() || !this.password.trim()) {
         this.isPass = false;
         return this.$message({
           message: "用户名或密码不能为空",
@@ -46,10 +48,24 @@ export default {
     submitForm() {
       this.inputBlur();
       if (!this.isPass) return;
-      this.$router.push("/main");
+      this.axios.post(
+        '/users/login', {
+          email: this.email,
+          password: this.password
+        }).then(res => {
+          if (res.status === 200) {       // 登录成功
+            this.LOGIN(res.data)
+            this.$router.push("/main")
+          } else {    // 登陆失败
+            console.log(11111)
+            this.$message.error(res.error)
+          }
+      }).catch(err => {
+        this.$message.error(err.message)
+      })
     },
     clearForm() {
-      this.username = "";
+      this.email = "";
       this.password = "";
       this.isPass = false;
     }
@@ -61,10 +77,10 @@ export default {
 .loginPage {
   width: 100%;
   height: 100%;
-  background-image: url('../../assets/bg_login.jpg');
+  background-image: url("../../assets/bg_login.jpg");
   background-size: auto;
 }
-.form{
+.form {
   position: absolute;
   width: 450px;
   height: 350px;
@@ -73,10 +89,10 @@ export default {
   margin-left: -225px;
   margin-top: -175px;
 }
-.el-button{
+.el-button {
   margin-top: 20px;
 }
-.el-form-item__label{
+.el-form-item__label {
   color: #fff;
 }
 </style>
