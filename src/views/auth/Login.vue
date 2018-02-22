@@ -3,16 +3,16 @@
     <div class="form">
       <el-row>
         <el-col :span="24">
-          <el-form label="email" :label-position="labelPosition" label-width="100px">
-            <el-form-item label="邮 箱">
-              <el-input v-model="email" type="text" id="email"></el-input>
+          <el-form label="" :label-position="labelPosition" label-width="100px" :model="ruleForm" ref="ruleForm" :rules="rules">
+            <el-form-item label="邮 箱" prop="email">
+              <el-input v-model="ruleForm.email" type="text" id="email"></el-input>
             </el-form-item>
-            <el-form-item label="密 码" style="color: #fff;">
-              <el-input v-model="password" type="password" id="pass"></el-input>
+            <el-form-item label="密 码" style="color: #fff;" prop="password">
+              <el-input v-model="ruleForm.password" type="password" id="pass"></el-input>
             </el-form-item>
             <el-form-item label="">
-              <el-button type="primary" @click="submitForm()">登录</el-button>
-              <el-button type="info" @click="clearForm()">重置</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">登 录</el-button>
+              <el-button type="info" @click="clearForm('ruleForm')">重 置</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -22,50 +22,58 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import { mapMutations } from "vuex";
 export default {
   name: "Login",
   data() {
     return {
-      email: "",
-      password: "",
+      ruleForm: {
+        email: "",
+        password: ""
+      },
       isPass: false,
-      labelPosition: 'right'
+      labelPosition: "right",
+      rules: {
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: "blur,change"
+          }
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+      }
     };
   },
   methods: {
-    ...mapMutations(['LOGIN']),
-    inputBlur() {
-      if (!this.email.trim() || !this.password.trim()) {
-        this.isPass = false;
-        return this.$message({
-          message: "用户名或密码不能为空",
-          type: "warning"
-        });
-      }
-      this.isPass = true;
+    ...mapMutations(["LOGIN"]),
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.axios
+            .post("/users/login", {
+              email: this.ruleForm.email,
+              password: this.ruleForm.password
+            })
+            .then(res => {
+              if (res.status === 200) {
+                // 登录成功
+                this.LOGIN(res.data);
+                this.$router.push("/main");
+              } else {
+                // 登陆失败
+                this.$message.error(res.error);
+              }
+            })
+            .catch(err => {
+              this.$message.error(err.message);
+            });
+        }
+      });
     },
-    submitForm() {
-      this.inputBlur();
-      if (!this.isPass) return;
-      this.axios.post(
-        '/users/login', {
-          email: this.email,
-          password: this.password
-        }).then(res => {
-          if (res.status === 200) {       // 登录成功
-            this.LOGIN(res.data)
-            this.$router.push("/main")
-          } else {    // 登陆失败
-            this.$message.error(res.error)
-          }
-      }).catch(err => {
-        this.$message.error(err.message)
-      })
-    },
-    clearForm() {
-      this.email = "";
-      this.password = "";
+    clearForm(formName) {
+      this.$refs[formName].resetFields();
       this.isPass = false;
     }
   }
