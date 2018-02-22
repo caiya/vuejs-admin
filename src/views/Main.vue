@@ -1,15 +1,14 @@
 <template>
   <el-container style="height: 100%; border: 1px solid #eee">
     <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
+      <el-dropdown @command="clickItem">
         <i class="el-icon-setting" style="margin-right: 15px"></i>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
+          <el-dropdown-item command="0">用户信息</el-dropdown-item>
+          <el-dropdown-item command="1">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <span>王小虎</span>
+      <span>{{userInfo.name}}</span>
     </el-header>
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246);height:100%;">
@@ -50,11 +49,59 @@
     </el-container>
     <el-container>
       <el-main class="intro">
-        © copyright: 2017-2018 <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
+        © copyright: 2017-2018
+        <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
       </el-main>
     </el-container>
+    <el-dialog title="关于我" :visible.sync="centerDialogVisible" width="30%">
+      <el-form :model="userInfo">
+        <el-form-item label="用户名">
+          <el-input v-model="userInfo.name" auto-complete="off" :readonly="true"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱">
+          <el-input v-model="userInfo.email" auto-complete="off" :readonly="true"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </el-container>
 </template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  name: "Main",
+  data() {
+    return {
+      userInfo: {},
+      centerDialogVisible: false
+    };
+  },
+  methods: {
+    selectOne(row, column, cell, event) {
+      console.log(row.name);
+    },
+    clickItem(command) {
+      command = parseInt(command);
+      switch (command) {
+        case 0:
+          this.centerDialogVisible = true;
+          break;
+        case 1:
+          break;
+      }
+    }
+  },
+  computed: {
+    ...mapState(["user"])
+  },
+  mounted() {
+    this.userInfo = this.user.userInfo;
+  }
+};
+</script>
 
 <style>
 .el-header {
@@ -66,34 +113,13 @@
 .el-aside {
   color: #333;
 }
-.navBar{
+.navBar {
   background-color: #fff;
 }
-.intro{
+.intro {
   position: fixed;
   bottom: 0px;
   text-align: center;
   width: 100%;
 }
 </style>
-
-<script>
-export default {
-  name: "Main",
-  data() {
-    const item = {
-      date: "2016-05-02",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄"
-    };
-    return {
-      tableData: Array(10).fill(item)
-    };
-  },
-  methods: {
-    selectOne(row, column, cell, event) {
-      console.log(row.name);
-    }
-  }
-};
-</script>
