@@ -53,7 +53,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {    // 如果需要拦截
-    if (store.state.user.token) {   // TODO 从vuex或者localstore获取token判断是否已登录，如果已登录
+    if (store.state.user.token) {
       next()
     } else {
       next({
