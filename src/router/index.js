@@ -23,6 +23,10 @@ export default new Router({
         path: 'user/setting',
         name: 'Setting',
         component: resolve => require(['@/views/user/Setting'], resolve),
+      }, {
+        path: '',
+        component: resolve => require(['@/views/common/Welcome'], resolve),
+        name: 'Welcome'
       }]
     }
   ]

@@ -13,7 +13,7 @@
     </el-header>
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246);height:100%;">
-        <el-menu :default-openeds="['1']" :unique-opened=true router="true">
+        <el-menu :default-openeds="['1']" router="true">
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-setting"></i>系统设置</template>
@@ -49,7 +49,7 @@
       </el-main>
     </el-container>
     <el-container>
-      <el-main>
+      <el-main class="intro">
         © copyright: 2017-2018 <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
       </el-main>
     </el-container>
@@ -68,6 +68,12 @@
 }
 .navBar{
   background-color: #fff;
+}
+.intro{
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+  width: 100%;
 }
 </style>
 
