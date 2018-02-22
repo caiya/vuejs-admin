@@ -5,10 +5,10 @@
         <el-col :span="24">
           <el-form label="" :label-position="labelPosition" label-width="100px" :model="ruleForm" ref="ruleForm" :rules="rules">
             <el-form-item label="邮 箱" prop="email">
-              <el-input v-model="ruleForm.email" type="text" id="email"></el-input>
+              <el-input v-model="ruleForm.email" type="text" @keyup.enter.native="submitForm('ruleForm')"></el-input>
             </el-form-item>
             <el-form-item label="密 码" style="color: #fff;" prop="password">
-              <el-input v-model="ruleForm.password" type="password" id="pass"></el-input>
+              <el-input v-model="ruleForm.password" type="password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
             </el-form-item>
             <el-form-item label="">
               <el-button type="primary" @click="submitForm('ruleForm')">登 录</el-button>
@@ -94,7 +94,7 @@ export default {
   top: 50%;
   left: 50%;
   margin-left: -225px;
-  margin-top: -175px;
+  margin-top: -100px;
 }
 .el-button {
   margin-top: 20px;
