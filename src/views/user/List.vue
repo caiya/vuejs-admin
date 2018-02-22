@@ -29,10 +29,14 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="page">
+      <el-pagination layout="prev, pager, next" :total="total" :background="true"></el-pagination>
+    </div>
   </div>
 </template>
 
 <script>
+import { getUserList } from "../../http/user";
 export default {
   name: "UserList",
   data() {
@@ -41,14 +45,15 @@ export default {
         name: "",
         email: ""
       },
+      total: 0,
       tableData: []
     };
   },
   mounted() {
-    this.axios
-      .get("/users")
+    getUserList()
       .then(res => {
-        this.tableData = res.data.rows;
+        this.tableData = res.rows;
+        this.total = this.tableData.length;
       })
       .catch(err => {
         this.$message.error(err.message);
@@ -60,7 +65,7 @@ export default {
       return cellValue ? "是" : "否";
     },
     formatStatus(row, column, cellValue) {
-      return cellValue === 'ok' ? "正常" : "已禁用";
+      return cellValue === "ok" ? "正常" : "已禁用";
     },
     handleClick(row) {
       console.log("当前row数据：", row);
@@ -74,6 +79,10 @@ export default {
   width: 100%;
   height: 100%;
   text-align: left;
+}
+.page {
+  text-align: center;
+  margin-top: 20px;
 }
 </style>
 

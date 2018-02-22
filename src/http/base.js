@@ -1,3 +1,9 @@
+/*
+ * @Author: cnblogs.com/vipzhou
+ * @Date: 2018-02-22 21:29:32 
+ * @Last Modified by: mikey.zhaopeng
+ * @Last Modified time: 2018-02-22 21:48:40
+ */
 import axios from 'axios'
 
 import router from '../router'
@@ -35,4 +41,62 @@ axios.interceptors.response.use(response => {
   return Promise.reject(err)
 })
 
-export default axios
+/**
+ * @param  {string} url
+ * @param  {object} params={}
+ */
+const fetch = (url, params = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.get(url, {
+      params
+    }).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+/**
+ * @param  {string} url
+ * @param  {object} data={}
+ */
+const post = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.post(url, data).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+/**
+ * @param  {string} url
+ * @param  {object} data={}
+ */
+const put = (url, data = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.put(url, data).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+/**
+ * @param  {string} url
+ * @param  {object} params={}
+ */
+const del = (url, params = {}) => {
+  return new Promise((resolve, reject) => {
+    axios.delete(url, {
+      params
+    }).then(res => {
+      resolve(res.data)
+    }).catch(err => {
+      reject(err)
+    })
+  })
+}
+
+export { axios, fetch, post, put, del }
