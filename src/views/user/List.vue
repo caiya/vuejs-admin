@@ -15,7 +15,7 @@
       <el-table-column prop="id" label="编号"></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="status" label="状态"></el-table-column>
+      <el-table-column prop="status" label="状态" :formatter="formatStatus"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="company" label="单位名称"></el-table-column>
       <el-table-column prop="mobile" label="电话号码"></el-table-column>
@@ -58,6 +58,9 @@ export default {
     onSubmit() {},
     formatIsAdmin(row, column, cellValue) {
       return cellValue ? "是" : "否";
+    },
+    formatStatus(row, column, cellValue) {
+      return cellValue === 'ok' ? "正常" : "已禁用";
     },
     handleClick(row) {
       console.log("当前row数据：", row);
