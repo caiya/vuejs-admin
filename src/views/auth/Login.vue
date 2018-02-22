@@ -7,7 +7,7 @@
             <el-form-item label="用户名">
               <el-input v-model="username" type="text" id="user"></el-input>
             </el-form-item>
-            <el-form-item label="密码">
+            <el-form-item label="密码" style="color: #fff;">
               <el-input v-model="password" type="password" id="pass"></el-input>
             </el-form-item>
             <el-form-item label="">
@@ -61,8 +61,8 @@ export default {
 .loginPage {
   width: 100%;
   height: 100%;
-  background-image: url(http://img2.imgtn.bdimg.com/it/u=3326912452,3636229800&fm=214&gp=0.jpg);
-  background-size: auto; 
+  background-image: url('../../assets/bg_login.jpg');
+  background-size: auto;
 }
 .form{
   position: absolute;
@@ -75,6 +75,9 @@ export default {
 }
 .el-button{
   margin-top: 20px;
+}
+.el-form-item__label{
+  color: #fff;
 }
 </style>
 
