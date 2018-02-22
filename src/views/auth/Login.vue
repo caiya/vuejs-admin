@@ -93,7 +93,7 @@ export default {
   height: 350px;
   top: 50%;
   left: 50%;
-  margin-left: -225px;
+  margin-left: -255px;
   margin-top: -100px;
 }
 .el-button {
