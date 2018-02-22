@@ -4,8 +4,8 @@ import router from '../router'
 import store from '../store'
 
 // axios 配置
-axios.defaults.timeout = 5000
-axios.defaults.baseURL = 'http://192.168.20.131:7001/api/v1'
+axios.defaults.timeout = 10000
+axios.defaults.baseURL = '/api/v1'
 
 // 请求拦截器
 axios.interceptors.request.use(config => {

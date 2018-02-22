@@ -120,7 +120,7 @@ export default {
   background-color: #fff;
 }
 .intro {
-  position: fixed;
+  /* position: fixed; */
   bottom: 0px;
   text-align: center;
   width: 100%;
