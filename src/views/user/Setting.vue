@@ -5,7 +5,7 @@
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
       <el-form-item label="年龄" prop="age">
-        <el-input v-model="userInfo.age"></el-input>
+        <el-input v-model.number="userInfo.age"></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="userInfo.email"></el-input>
@@ -68,6 +68,20 @@ export default {
       });
   },
   data() {
+    const checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("年龄不能为空"));
+      }
+      if (!Number.isInteger(value)) {
+        callback(new Error("请输入数字值"));
+      } else {
+        if (value < 10) {
+          callback(new Error("必须年满10岁"));
+        } else {
+          callback();
+        }
+      }
+    };
     return {
       labelPosition: "right",
       userInfo: {
@@ -85,11 +99,9 @@ export default {
           }
         ],
         age: [
-          { required: true, message: "年龄不能为空", trigger: "blur" },
           {
-            type: "number",
-            message: "年龄必须为数字值",
-            trigger: "blur"
+            validator: checkAge,
+            trigger: "blur,change"
           }
         ],
         email: [
