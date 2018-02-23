@@ -21,11 +21,11 @@
       <el-table-column prop="mobile" label="电话号码"></el-table-column>
       <el-table-column prop="isAdmin" label="是否管理员" :formatter="formatIsAdmin"></el-table-column>
       <el-table-column prop="info" label="备注信息"></el-table-column>
-      <el-table-column fixed="right" label="操作">
+      <el-table-column label="操作" width="240">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="iconfont icon-details"></i>查看</el-button>
+          <el-button type="text" size="small"><i class="iconfont icon-edit"></i>编辑</el-button>
+          <el-button type="text" size="small"><i class="iconfont icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

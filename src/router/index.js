@@ -15,7 +15,7 @@ const router = new Router({
     },
     {
       path: '',   // 默认地址为登录页
-      name: 'Login',
+      name: '',
       component: resolve => require(['@/views/auth/Login'], resolve)
     },
     {

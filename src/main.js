@@ -8,6 +8,8 @@ import {axios} from './http/base'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import './assets/fonts/iconfont.css'
+
 import store from './store'
 
 Vue.use(ElementUI)

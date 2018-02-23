@@ -32,4 +32,7 @@ body {
   width: 100%;
   height: 100%;
 }
+.iconfont{
+  margin-right: 7px;
+}
 </style>
