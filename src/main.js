@@ -15,7 +15,7 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 // 挂载到prototype上面，确保组件中可以直接使用this.axios
-Vue.prototype.axios = axios
+// Vue.prototype.axios = axios
 
 /* eslint-disable no-new */
 new Vue({

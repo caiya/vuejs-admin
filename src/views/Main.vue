@@ -28,7 +28,7 @@
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-mobile-phone"></i>设备管理</template>
-            <el-menu-item index="3-2" route="/main/device">设备列表</el-menu-item>
+            <el-menu-item index="3-2" route="/main/device" @click="changeNav('device')">设备列表</el-menu-item>
             <el-menu-item index="3-1" route="/main/device/add">新增设备</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -38,7 +38,7 @@
           <el-header style="height:10px;" class="navBar">
             <el-breadcrumb separator="/">
               <el-breadcrumb-item :to="{ path: '/main' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item>欢迎页</el-breadcrumb-item>
+              <el-breadcrumb-item>{{currentNav}}</el-breadcrumb-item>
             </el-breadcrumb>
           </el-header>
           <el-main>
@@ -76,23 +76,24 @@ export default {
   data() {
     return {
       userInfo: {},
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      currentNav: ""
     };
   },
   methods: {
-    ...mapMutations(['LOGOUT']),
+    ...mapMutations(["LOGOUT"]),
     selectOne(row, column, cell, event) {
       // console.log(row.name)
     },
     clickItem(command) {
       command = parseInt(command);
       switch (command) {
-        case 0:     // 关于我
+        case 0: // 关于我
           this.centerDialogVisible = true;
           break;
-        case 1:     // 退出登录
-          this.LOGOUT()
-          this.$router.push('/')
+        case 1: // 退出登录
+          this.LOGOUT();
+          this.$router.push("/");
           break;
       }
     }
@@ -100,8 +101,14 @@ export default {
   computed: {
     ...mapState(["user"])
   },
+  watch: {
+    $route() {
+      this.currentNav = this.$route.meta.nav;
+    }
+  },
   mounted() {
     this.userInfo = this.user.userInfo;
+    this.currentNav = this.$router.currentRoute.meta.nav;
   }
 };
 </script>

@@ -24,6 +24,7 @@ const router = new Router({
       component: resolve => require(['@/views/Main'], resolve),
       meta: {
         requireAuth: true,    // 添加该字段，表示进入这个路由是需要登录的
+        nav: '欢迎页'
       },
       children: [{
         path: 'user',
@@ -31,6 +32,7 @@ const router = new Router({
         name: 'UserList',
         meta: {
           requireAuth: true,
+          nav: '用户管理'
         },
       }, {
         path: 'user/setting',
@@ -38,6 +40,7 @@ const router = new Router({
         component: resolve => require(['@/views/user/Setting'], resolve),
         meta: {
           requireAuth: true,
+          nav: '资料设置'
         },
       }, {
         path: '',   // 后台首页默认页
@@ -45,6 +48,7 @@ const router = new Router({
         name: 'Welcome',
         meta: {
           requireAuth: true,
+          nav: '欢迎页'
         },
       }]
     }
