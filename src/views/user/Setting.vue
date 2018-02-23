@@ -19,8 +19,12 @@
       <el-form-item label="上次登录">
         <el-date-picker v-model="userInfo.lastSignInAt" type="datetime" placeholder="选择日期时间" style="display:block;"></el-date-picker>
       </el-form-item>
+      <el-form-item label="个人说明">
+        <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="userInfo.info">
+        </el-input>
+      </el-form-item>
       <el-form-item label="头像">
-        <el-upload class="avatar-uploader" style="display:block;" action="/api/v1/tools/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-upload class="avatar-uploader" action="/api/v1/tools/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="userInfo.avatar" :src="userInfo.avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
@@ -34,13 +38,17 @@
 </template>
 
 <script>
-import { getUserDetail, updateUserInfo } from "../../http/user";
-
+import { getUserDetail, updateUserInfo, addUser } from "../../http/user";
+import { mapState } from "vuex";
 export default {
   name: "UserSetting",
   mounted() {
     // 加载用户信息
-    getUserDetail(this.$route.params.userId)
+    if (this.$route.params.userId === "add") return;
+    // 这里使用this.user获取不到数据，因为mounted先执行
+    getUserDetail(
+      this.$route.params.userId || this.$store.state.user.userInfo.id
+    )
       .then(res => {
         console.log("用户详情", res);
         this.userInfo = res;
@@ -56,16 +64,20 @@ export default {
   data() {
     return {
       labelPosition: "right",
-      userInfo: {}
+      userInfo: {
+        avatar: ''    // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
+      }
     };
+  },
+  computed: {
+    ...mapState["user"]
   },
   methods: {
     back() {
       this.$router.back();
     },
     handleAvatarSuccess(res, file) {
-      console.log(res);
-      this.userInfo.avatar = "/" + res.url;
+      this.userInfo.avatar = '/' + res.url;
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
@@ -81,14 +93,30 @@ export default {
       return isJPG && isLt2M;
     },
     saveUserInfo() {
-      updateUserInfo(this.userInfo)
-        .then(res => {
+      if (this.userInfo.id) {
+        console.log("修改操作");
+        // 修改保存
+        updateUserInfo(this.userInfo)
+          .then(res => {
+            this.$router.back();
+          })
+          .catch(err => {
+            console.log(err);
+            this.$message.error(err.message);
+          });
+      } else {
+        // 新增保存
+        console.log("新增操作");
+        addUser(this.userInfo).then(res => {
+          this.$message({
+            type: 'success',
+            message: '新增成功!'
+          });
           this.$router.back();
-        })
-        .catch(err => {
-          console.log(err);
+        }).catch(err=>{
           this.$message.error(err.message);
-        });
+        })
+      }
     }
   }
 };

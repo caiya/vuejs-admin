@@ -48,4 +48,14 @@ const updateUserInfo = user => {
   return http.put(`/users/${user.id}`, user)
 }
 
-export { login, getUserList, deleteUserById, getUserDetail, updateUserInfo }
+/**
+ * 添加用户
+ * @param {user对象} user 
+ */
+const addUser = user => {
+  return http.post('/users', Object.assign({
+    password: '123456'
+  }, user))
+}
+
+export { login, getUserList, deleteUserById, getUserDetail, updateUserInfo, addUser }

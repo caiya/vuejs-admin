@@ -10,8 +10,11 @@
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
+      <el-form-item>
+        <el-button type="info" @click="$router.push('/main/user/setting/add')">新增用户</el-button>
+      </el-form-item>
     </el-form>
-    <el-table :data="tableData" stripe style="width: 100%" :highlight-current-row="true">
+    <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true">
       <el-table-column prop="id" label="编号"></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
@@ -21,19 +24,17 @@
       <el-table-column prop="mobile" label="电话号码"></el-table-column>
       <el-table-column prop="isAdmin" label="是否管理员" :formatter="formatIsAdmin"></el-table-column>
       <el-table-column prop="info" label="备注信息"></el-table-column>
-      <el-table-column label="操作" width="240">
+      <el-table-column label="操作" width="200">
         <template slot-scope="scope">
           <el-button @click="handleDetail(scope.row)" type="text" size="small">
             <i class="iconfont icon-details"></i>查看</el-button>
-          <el-button @click="handleEdit(scope.row)" type="text" size="small">
-            <i class="iconfont icon-edit"></i>编辑</el-button>
           <el-button @click="handleDelete(scope.row)" type="text" size="small">
             <i class="iconfont icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="page">
-      <el-pagination layout="prev, pager, next" :total="total" :background="true"></el-pagination>
+      <el-pagination layout="prev, pager, next, jumper, ->, sizes, total" :total="tableData.length" :background="true" @current-change="pageChange" @size-change="pageSizeChange" :current-page="currentPage" :page-size="pageSize" :page-sizes="[5, 10, 20, 50, 100]"></el-pagination>
     </div>
   </div>
 </template>
@@ -48,15 +49,15 @@ export default {
         name: "",
         email: ""
       },
-      total: 0,
-      tableData: []
+      tableData: [],
+      currentPage: 1,
+      pageSize: 10
     };
   },
   mounted() {
     getUserList()
       .then(res => {
         this.tableData = res.rows;
-        this.total = this.tableData.length;
       })
       .catch(err => {
         this.$message.error(err.message);
@@ -73,7 +74,6 @@ export default {
       getUserList(query)
         .then(res => {
           this.tableData = res.rows;
-          this.total = this.tableData.length;
         })
         .catch(err => {
           this.$message.error(err.message);
@@ -87,7 +87,6 @@ export default {
     },
     handleDetail(row) {
       // 查看详情
-      console.log("当前row数据：", row);
       this.$router.push(`/main/user/setting/${row.id}`);
     }, // 删除
     handleDelete(row) {
@@ -107,21 +106,25 @@ export default {
               this.tableData = this.tableData.filter(
                 item => item.id !== row.id
               );
-              this.total = this.tableData.length;
             })
             .catch(err => {
-              this.$message({
-                type: "warning",
-                message: err.message
-              });
+              this.$message.error(err.message);
             });
         })
         .catch(err => {
           console.log(err);
         });
     },
-    handleEdit(row) {
-      // 修改-跳转至修改路由
+    addUser() {
+      // 添加用户
+      this.$router.push("/main/user/setting");
+    },
+    pageChange(currentPage) {
+      console.log("当前页：", currentPage);
+      this.currentPage = currentPage;
+    },
+    pageSizeChange(pageSize) {
+      this.pageSize = pageSize;
     }
   }
 };

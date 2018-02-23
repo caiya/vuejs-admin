@@ -41,7 +41,7 @@
           </el-submenu>
           <el-submenu index="5">
             <template slot="title">
-              <i class="iconfont icon-shujutongji"></i>授权管理</template>
+              <i class="iconfont icon-network-man"></i>授权管理</template>
             <el-menu-item index="/main/auth/client" route="/main/auth/client">Client列表</el-menu-item>
             <el-menu-item index="/main/auth/token" route="/main/auth/token">Token列表</el-menu-item>
             <el-menu-item index="/main/auth/code" route="/main/auth/code">Code列表</el-menu-item>
