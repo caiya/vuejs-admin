@@ -51,7 +51,7 @@ export default {
       },
       tableData: [],
       currentPage: 1,
-      pageSize: 10
+      pageSize: 5
     };
   },
   mounted() {
