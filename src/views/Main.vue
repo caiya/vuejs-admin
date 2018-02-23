@@ -63,9 +63,9 @@
       </el-main>
     </el-container>
     <el-main class="intro">
-        © copyright: 2017-2018
-        <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
-      </el-main>
+      © copyright: 2017-2018
+      <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
+    </el-main>
     <el-container>
     </el-container>
     <el-dialog title="关于我" :visible.sync="centerDialogVisible" width="30%">
@@ -92,7 +92,7 @@ export default {
     return {
       userInfo: {},
       centerDialogVisible: false,
-      defaultActive: ''
+      defaultActive: ""
     };
   },
   methods: {
@@ -117,9 +117,7 @@ export default {
         this.defaultActive = this.$route.name;
         return this.$route.meta.nav;
       },
-      set(newValue) {
-        
-      }
+      set(newValue) {}
     }
   },
   mounted() {

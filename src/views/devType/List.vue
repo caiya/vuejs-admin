@@ -14,7 +14,7 @@
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%;" :highlight-current-row="true">
       <el-table-column prop="id" label="编号" sortable align="center"></el-table-column>
       <el-table-column prop="name" label="设备类型名称" align="center"></el-table-column>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-button @click="handleDetail(scope.row)" type="text" size="small">
             <i class="iconfont icon-details"></i>查看</el-button>
