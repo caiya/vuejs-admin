@@ -1,27 +1,19 @@
 <template>
   <div class="search">
     <el-form :inline="true" :model="formInline" class="form-inline">
-      <el-form-item label="设备名">
-        <el-input v-model="formInline.name" placeholder="设备名"></el-input>
+      <el-form-item label="设备类型名">
+        <el-input v-model="formInline.name" placeholder="设备类型名"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="success" @click="$router.push('/main/device/add')">新增设备</el-button>
+        <el-button type="success" @click="$router.push('/main/deviceType/add')">新增设备类型</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%;" :highlight-current-row="true">
       <el-table-column prop="id" label="编号" sortable align="center"></el-table-column>
-      <el-table-column prop="name" label="设备名称" align="center"></el-table-column>
-      <el-table-column prop="code" label="设备编号" align="center"></el-table-column>
-      <el-table-column prop="key" label="设备激活码" align="center"></el-table-column>
-      <el-table-column prop="pubNetAddr" label="公网地址" align="center"></el-table-column>
-      <el-table-column prop="type" label="设备分类" align="center"></el-table-column>
-      <el-table-column prop="model" label="设备型号" align="center"></el-table-column>
-      <el-table-column prop="prodDate" label="出厂日期" align="center"></el-table-column>
-      <el-table-column prop="status" label="设备状态" align="center"></el-table-column>
-      <el-table-column prop="runTime" label="设备运行时间" align="center"></el-table-column>
+      <el-table-column prop="name" label="设备类型名称" align="center"></el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button @click="handleDetail(scope.row)" type="text" size="small">
@@ -38,9 +30,9 @@
 </template>
 
 <script>
-import { getDeviceList, deleteDeviceById } from "../../http/device";
+import { getDevTypeList, deleteDevTypeById } from "../../http/devType";
 export default {
-  name: "DeviceList",
+  name: "DevTypeList",
   data() {
     return {
       formInline: {
@@ -53,7 +45,7 @@ export default {
     };
   },
   mounted() {
-    getDeviceList()
+    getDevTypeList()
       .then(res => {
         this.tableData = res.rows;
       })
@@ -69,7 +61,7 @@ export default {
         this.formInline[key] &&
           (query[key] = (this.formInline[key] + "").trim());
       });
-      getDeviceList(query)
+      getDevTypeList(query)
         .then(res => {
           this.tableData = res.rows;
         })
@@ -85,17 +77,17 @@ export default {
     },
     handleDetail(row) {
       // 查看详情
-      this.$router.push(`/main/device/setting/${row.id}`);
+      this.$router.push(`/main/deviceType/setting/${row.id}`);
     }, // 删除
     handleDelete(row) {
       console.log("row:", row);
-      this.$confirm("此操作将永久删除该设备, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该设备类型, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          deleteDeviceById(row.id)
+          deleteDevTypeById(row.id)
             .then(res => {
               this.$message({
                 type: "success",
@@ -113,9 +105,9 @@ export default {
           console.log(err);
         });
     },
-    addDevice() {
-      // 添加设备
-      this.$router.push("/main/device/setting");
+    addDevType() {
+      // 添加设备类型
+      this.$router.push("/main/deviceType/setting");
     },
     pageChange(currentPage) {
       console.log("当前页：", currentPage);

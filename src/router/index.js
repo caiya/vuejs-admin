@@ -59,6 +59,14 @@ const router = new Router({
           nav: '设备新增'
         },
       }, {
+        path: 'device/type',
+        component: resolve => require(['@/views/devType/List'], resolve),
+        name: 'DevTypeList',
+        meta: {
+          requireAuth: true,
+          nav: '设备类别'
+        },
+      },{
         path: '',   // 后台首页默认页
         component: resolve => require(['@/views/common/Welcome'], resolve),
         name: 'Welcome',

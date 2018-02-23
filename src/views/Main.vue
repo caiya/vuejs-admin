@@ -29,7 +29,7 @@
             <template slot="title">
               <i class="iconfont icon-equipment-set"></i>设备管理</template>
             <el-menu-item index="Device" route="/main/device">设备列表</el-menu-item>
-            <el-menu-item index="/main/device/type" route="/main/device/type">设备类别</el-menu-item>
+            <el-menu-item index="DevTypeList" route="/main/device/type">设备类别</el-menu-item>
             <el-menu-item index="/main/device/arg" route="/main/device/arg">设备参数</el-menu-item>
             <el-menu-item index="/main/device/monitor" route="/main/device/monitor">设备监控</el-menu-item>
           </el-submenu>
