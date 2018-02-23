@@ -147,6 +147,7 @@ export default {
   bottom: 10px;
   text-align: center;
   width: 100%;
+  overflow-y: hidden;
 }
 .el-submenu__title {
   padding: 0 50px;
