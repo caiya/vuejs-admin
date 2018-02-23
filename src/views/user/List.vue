@@ -15,7 +15,7 @@
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true">
-      <el-table-column prop="id" label="编号"></el-table-column>
+      <el-table-column prop="id" label="编号" sortable></el-table-column>
       <el-table-column prop="name" label="姓名"></el-table-column>
       <el-table-column prop="age" label="年龄"></el-table-column>
       <el-table-column prop="status" label="状态" :formatter="formatStatus"></el-table-column>

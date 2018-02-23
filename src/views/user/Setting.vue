@@ -16,20 +16,26 @@
       <el-form-item label="单位名称">
         <el-input v-model="userInfo.company"></el-input>
       </el-form-item>
-      <el-form-item label="上次登录">
-        <el-date-picker v-model="userInfo.lastSignInAt" type="datetime" placeholder="选择日期时间" style="display:block;"></el-date-picker>
+      <el-form-item label="上次登录" style="text-align:left;">
+        <el-date-picker v-model="userInfo.lastSignInAt" type="datetime" placeholder="选择日期时间"></el-date-picker>
+      </el-form-item>
+      <el-form-item label="当前状态" style="text-align:left;">
+        <el-radio-group v-model="userInfo.status" >
+          <el-radio :label="1">正常</el-radio>
+          <el-radio :label="2">禁用</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="个人说明">
         <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="userInfo.info">
         </el-input>
       </el-form-item>
-      <el-form-item label="头像">
+      <el-form-item label="头像" style="text-align:left;">
         <el-upload class="avatar-uploader" action="/api/v1/tools/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="userInfo.avatar" :src="userInfo.avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="text-align:left;">
         <el-button type="primary" @click="saveUserInfo">保存设置</el-button>
         <el-button @click="back">返回上级</el-button>
       </el-form-item>
@@ -65,7 +71,8 @@ export default {
     return {
       labelPosition: "right",
       userInfo: {
-        avatar: ''    // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
+        status: 1,
+        avatar: "" // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
       }
     };
   },
@@ -77,7 +84,7 @@ export default {
       this.$router.back();
     },
     handleAvatarSuccess(res, file) {
-      this.userInfo.avatar = '/' + res.url;
+      this.userInfo.avatar = "/" + res.url;
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
@@ -107,15 +114,17 @@ export default {
       } else {
         // 新增保存
         console.log("新增操作");
-        addUser(this.userInfo).then(res => {
-          this.$message({
-            type: 'success',
-            message: '新增成功!'
+        addUser(this.userInfo)
+          .then(res => {
+            this.$message({
+              type: "success",
+              message: "新增成功!"
+            });
+            this.$router.back();
+          })
+          .catch(err => {
+            this.$message.error(err.message);
           });
-          this.$router.back();
-        }).catch(err=>{
-          this.$message.error(err.message);
-        })
       }
     }
   }
