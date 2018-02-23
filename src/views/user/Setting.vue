@@ -1,42 +1,42 @@
 <template>
   <div class="form">
-    <el-form :label-position="labelPosition" label-width="80px" :model="userInfo">
-      <el-form-item label="名称">
+    <el-form :label-position="labelPosition" label-width="80px" :model="userInfo" :rules="rules" ref="userInfo">
+      <el-form-item label="名称" prop="name">
         <el-input v-model="userInfo.name"></el-input>
       </el-form-item>
-      <el-form-item label="年龄">
+      <el-form-item label="年龄" prop="age">
         <el-input v-model="userInfo.age"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱">
+      <el-form-item label="邮箱" prop="email">
         <el-input v-model="userInfo.email"></el-input>
       </el-form-item>
-      <el-form-item label="联系方式">
+      <el-form-item label="联系方式" prop="mobile">
         <el-input v-model="userInfo.mobile"></el-input>
       </el-form-item>
-      <el-form-item label="单位名称">
+      <el-form-item label="单位名称" prop="company">
         <el-input v-model="userInfo.company"></el-input>
       </el-form-item>
-      <el-form-item label="上次登录" style="text-align:left;">
-        <el-date-picker v-model="userInfo.lastSignInAt" type="datetime" placeholder="选择日期时间"></el-date-picker>
+      <el-form-item label="上次登录" style="text-align:left;" prop="lastSignInAt">
+        <el-date-picker v-model="userInfo.lastSignInAt" type="datetime" placeholder="选择日期时间" :readonly="true"></el-date-picker>
       </el-form-item>
-      <el-form-item label="当前状态" style="text-align:left;">
-        <el-radio-group v-model="userInfo.status" >
-          <el-radio :label="1">正常</el-radio>
-          <el-radio :label="2">禁用</el-radio>
+      <el-form-item label="当前状态" style="text-align:left;" prop="status">
+        <el-radio-group v-model="userInfo.status">
+          <el-radio label="ok">正常</el-radio>
+          <el-radio label="forbidden">禁用</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="个人说明">
+      <el-form-item label="个人说明" prop="info">
         <el-input type="textarea" :rows="4" placeholder="请输入内容" v-model="userInfo.info">
         </el-input>
       </el-form-item>
-      <el-form-item label="头像" style="text-align:left;">
+      <el-form-item label="头像" style="text-align:left;" prop="avatar">
         <el-upload class="avatar-uploader" action="/api/v1/tools/upload" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
           <img v-if="userInfo.avatar" :src="userInfo.avatar" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
       <el-form-item style="text-align:left;">
-        <el-button type="primary" @click="saveUserInfo">保存设置</el-button>
+        <el-button type="primary" @click="saveUserInfo('userInfo')">保存设置</el-button>
         <el-button @click="back">返回上级</el-button>
       </el-form-item>
     </el-form>
@@ -71,8 +71,42 @@ export default {
     return {
       labelPosition: "right",
       userInfo: {
-        status: 1,
+        status: "ok",
         avatar: "" // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
+      },
+      rules: {
+        name: [
+          { required: true, message: "请输入用户名称", trigger: "blur" },
+          {
+            min: 3,
+            max: 10,
+            message: "长度在 3 到 10 个字符",
+            trigger: "blur,change"
+          }
+        ],
+        age: [
+          { required: true, message: "年龄不能为空", trigger: "blur" },
+          {
+            type: "number",
+            message: "年龄必须为数字值",
+            trigger: "blur"
+          }
+        ],
+        email: [
+          { required: true, message: "请输入邮箱地址", trigger: "blur,change" },
+          {
+            type: "email",
+            message: "请输入正确的邮箱地址",
+            trigger: "blur,change"
+          }
+        ],
+        mobile: [
+          {
+            required: true,
+            message: "联系方式不能为空",
+            trigger: "blur,change"
+          }
+        ]
       }
     };
   },
@@ -99,33 +133,35 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    saveUserInfo() {
-      if (this.userInfo.id) {
-        console.log("修改操作");
-        // 修改保存
-        updateUserInfo(this.userInfo)
-          .then(res => {
-            this.$router.back();
-          })
-          .catch(err => {
-            console.log(err);
-            this.$message.error(err.message);
-          });
-      } else {
-        // 新增保存
-        console.log("新增操作");
-        addUser(this.userInfo)
-          .then(res => {
-            this.$message({
-              type: "success",
-              message: "新增成功!"
-            });
-            this.$router.back();
-          })
-          .catch(err => {
-            this.$message.error(err.message);
-          });
-      }
+    saveUserInfo(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.userInfo.id) {
+            // 修改保存
+            updateUserInfo(this.userInfo)
+              .then(res => {
+                this.$router.back();
+              })
+              .catch(err => {
+                console.log(err);
+                this.$message.error(err.message);
+              });
+          } else {
+            // 新增保存
+            addUser(this.userInfo)
+              .then(res => {
+                this.$message({
+                  type: "success",
+                  message: "新增成功!"
+                });
+                this.$router.back();
+              })
+              .catch(err => {
+                this.$message.error(err.message);
+              });
+          }
+        }
+      });
     }
   }
 };

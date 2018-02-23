@@ -11,7 +11,7 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="info" @click="$router.push('/main/user/setting/add')">新增用户</el-button>
+        <el-button type="success" @click="$router.push('/main/user/setting/add')">新增用户</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true">
