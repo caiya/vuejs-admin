@@ -43,6 +43,22 @@ const router = new Router({
           nav: '资料设置'
         },
       }, {
+        path: 'device',
+        component: resolve => require(['@/views/device/List'], resolve),
+        name: 'Device',
+        meta: {
+          requireAuth: true,
+          nav: '设备列表'
+        },
+      },{
+        path: 'device/add',
+        component: resolve => require(['@/views/device/Add'], resolve),
+        name: 'Device',
+        meta: {
+          requireAuth: true,
+          nav: '设备新增'
+        },
+      }, {
         path: '',   // 后台首页默认页
         component: resolve => require(['@/views/common/Welcome'], resolve),
         name: 'Welcome',

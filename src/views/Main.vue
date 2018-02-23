@@ -20,11 +20,11 @@
             <el-menu-item index="UserList" route="/main/user">用户管理</el-menu-item>
             <el-menu-item index="UserSetting" route="/main/user/setting">资料设置</el-menu-item>
           </el-submenu>
-          <el-submenu index="2">
+          <!-- <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-message"></i>文章管理</template>
             <el-menu-item index="ArtileList" route="/main/article">文章列表</el-menu-item>
-          </el-submenu>
+          </el-submenu> -->
           <el-submenu index="3">
             <template slot="title">
               <i class="iconfont icon-equipment-set"></i>设备管理</template>
