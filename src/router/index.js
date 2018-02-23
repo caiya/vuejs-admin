@@ -20,7 +20,7 @@ const router = new Router({
     },
     {
       path: '/main',
-      name: 'Main',
+      name: '',
       component: resolve => require(['@/views/Main'], resolve),
       meta: {
         requireAuth: true,    // 添加该字段，表示进入这个路由是需要登录的
@@ -53,7 +53,7 @@ const router = new Router({
       },{
         path: 'device/add',
         component: resolve => require(['@/views/device/Add'], resolve),
-        name: 'Device',
+        name: 'DeviceAdd',
         meta: {
           requireAuth: true,
           nav: '设备新增'

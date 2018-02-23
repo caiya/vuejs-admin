@@ -12,17 +12,17 @@
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true">
-      <el-table-column prop="id" label="编号" sortable></el-table-column>
-      <el-table-column prop="name" label="设备名称"></el-table-column>
-      <el-table-column prop="code" label="设备编号"></el-table-column>
-      <el-table-column prop="key" label="设备激活码"></el-table-column>
-      <el-table-column prop="pubNetAddr" label="公网地址"></el-table-column>
-      <el-table-column prop="type" label="设备分类"></el-table-column>
-      <el-table-column prop="model" label="设备型号"></el-table-column>
-      <el-table-column prop="prodDate" label="出厂日期"></el-table-column>
-      <el-table-column prop="status" label="设备状态"></el-table-column>
-      <el-table-column prop="runTime" label="设备运行时间"></el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column prop="id" label="编号" sortable align="center"></el-table-column>
+      <el-table-column prop="name" label="设备名称" align="center"></el-table-column>
+      <el-table-column prop="code" label="设备编号" align="center"></el-table-column>
+      <el-table-column prop="key" label="设备激活码" align="center"></el-table-column>
+      <el-table-column prop="pubNetAddr" label="公网地址" align="center"></el-table-column>
+      <el-table-column prop="type" label="设备分类" align="center"></el-table-column>
+      <el-table-column prop="model" label="设备型号" align="center"></el-table-column>
+      <el-table-column prop="prodDate" label="出厂日期" align="center"></el-table-column>
+      <el-table-column prop="status" label="设备状态" align="center"></el-table-column>
+      <el-table-column prop="runTime" label="设备运行时间" align="center"></el-table-column>
+      <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button @click="handleDetail(scope.row)" type="text" size="small">
             <i class="iconfont icon-details"></i>查看</el-button>

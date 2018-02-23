@@ -62,11 +62,11 @@
         </el-container>
       </el-main>
     </el-container>
-    <el-container>
-      <el-main class="intro">
+    <el-main class="intro">
         © copyright: 2017-2018
         <a href="http://www.cnblogs.com/vipzhou" target="_blank">西安-晁州</a>
       </el-main>
+    <el-container>
     </el-container>
     <el-dialog title="关于我" :visible.sync="centerDialogVisible" width="30%">
       <el-form :model="userInfo">
@@ -144,8 +144,7 @@ export default {
   background-color: #fff;
 }
 .intro {
-  /* position: fixed; */
-  bottom: 0px;
+  bottom: 10px;
   text-align: center;
   width: 100%;
 }

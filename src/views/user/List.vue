@@ -15,16 +15,16 @@
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true">
-      <el-table-column prop="id" label="编号" sortable></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="age" label="年龄"></el-table-column>
-      <el-table-column prop="status" label="状态" :formatter="formatStatus"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="company" label="单位名称"></el-table-column>
-      <el-table-column prop="mobile" label="电话号码"></el-table-column>
-      <el-table-column prop="isAdmin" label="是否管理员" :formatter="formatIsAdmin"></el-table-column>
-      <el-table-column prop="info" label="备注信息"></el-table-column>
-      <el-table-column label="操作" width="200">
+      <el-table-column prop="id" label="编号" sortable align="center"></el-table-column>
+      <el-table-column prop="name" label="姓名" align="center"></el-table-column>
+      <el-table-column prop="age" label="年龄" align="center"></el-table-column>
+      <el-table-column prop="status" label="状态" :formatter="formatStatus" align="center"></el-table-column>
+      <el-table-column prop="email" label="邮箱" align="center"></el-table-column>
+      <el-table-column prop="company" label="单位名称" align="center"></el-table-column>
+      <el-table-column prop="mobile" label="电话号码" align="center"></el-table-column>
+      <el-table-column prop="isAdmin" label="是否管理员" :formatter="formatIsAdmin" align="center"></el-table-column>
+      <el-table-column prop="info" label="备注信息" align="center"></el-table-column>
+      <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button @click="handleDetail(scope.row)" type="text" size="small">
             <i class="iconfont icon-details"></i>查看</el-button>
