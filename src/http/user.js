@@ -1,8 +1,8 @@
 /*
  * @Author: cnblogs.com/vipzhou
  * @Date: 2018-02-22 21:30:19 
- * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-02-22 22:02:47
+ * @Last Modified by: vipzhou
+ * @Last Modified time: 2018-02-24 00:12:00
  */
 
 import * as http from './base'
@@ -58,4 +58,14 @@ const addUser = user => {
   }, user))
 }
 
-export { login, getUserList, deleteUserById, getUserDetail, updateUserInfo, addUser }
+/**
+ * 退出登陆
+ * @param {email} email 
+ */
+const logout = email => {
+  return http.post('/users/logout', {
+    email
+  })
+}
+
+export { login, getUserList, deleteUserById, getUserDetail, updateUserInfo, addUser, logout }

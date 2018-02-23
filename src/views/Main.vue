@@ -86,6 +86,8 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { logout } from "../http/user";
+import mqtt from "mqtt";
 export default {
   name: "Main",
   data() {
@@ -104,8 +106,14 @@ export default {
           this.centerDialogVisible = true;
           break;
         case 1: // 退出登录
-          this.LOGOUT();
-          this.$router.push("/");
+          logout(this.$store.state.user.userInfo.email)
+            .then(res => {
+              this.LOGOUT();
+              this.$router.push("/");
+            })
+            .catch(err => {
+              console.log(err);
+            });
           break;
       }
     }
@@ -124,6 +132,27 @@ export default {
     this.userInfo = this.user.userInfo;
     this.currentNav = this.$route.meta.nav;
     this.defaultActive = this.$route.name;
+    var client = mqtt.connect("ws://mq.tongxinmao.com:18832/web", {
+      clientId: "vuejs-admin-testing-project"
+    });
+
+    client.on("connect", () => {
+      console.log("链接mqtt成功");
+      client.subscribe("msgNotice");
+    });
+
+    client.on("message", (topic, message) => {
+      // message is Buffer
+      this.$message({
+        type: "warning",
+        message: JSON.parse(message.toString()).msg
+      });
+    });
+  },
+  beforeDestory() {
+    console.log("组件已销毁");
+    client.unsubscribe("msgNotice");
+    client.end();
   }
 };
 </script>

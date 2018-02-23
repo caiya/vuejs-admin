@@ -18,7 +18,7 @@ module.exports = {
       '/upload': {
         target: 'http://216.250.107.28:' + 7001,
         changeOrigin: true
-      },
+      }
     },
 
     // Various Dev Server settings
