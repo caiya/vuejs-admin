@@ -35,8 +35,8 @@ const router = new Router({
           nav: '用户管理'
         },
       }, {
-        path: 'user/setting',
-        name: 'Setting',
+        path: 'user/setting/:userId?',
+        name: 'UserSetting',
         component: resolve => require(['@/views/user/Setting'], resolve),
         meta: {
           requireAuth: true,

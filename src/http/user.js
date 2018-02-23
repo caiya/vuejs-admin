@@ -19,8 +19,33 @@ const login = (data) => {
  * 获取用户列表
  * @param {object} params 
  */
-const getUserList = (params) => {
+const getUserList = params => {
   return http.fetch('/users', params)
 }
+/**
+ * 删除用户
+ * @param  {object} params
+ */
+const deleteUserById = id => {
+  return http.del(`/users/${id}`)
+}
+/**
+ * 获取用户详情
+ * @param  {id} id
+ */
+const getUserDetail = id => {
+  return http.fetch(`/users/${id}`, {})
+}
 
-export { login, getUserList }
+/**
+ * 保存用户信息
+ * @param {object} user 
+ */
+const updateUserInfo = user => {
+  if (!user.id) {
+    return Promise.reject(new Error(`arg id can't be null`))
+  }
+  return http.put(`/users/${user.id}`, user)
+}
+
+export { login, getUserList, deleteUserById, getUserDetail, updateUserInfo }

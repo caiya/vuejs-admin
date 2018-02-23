@@ -23,9 +23,12 @@
       <el-table-column prop="info" label="备注信息"></el-table-column>
       <el-table-column label="操作" width="240">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small"><i class="iconfont icon-details"></i>查看</el-button>
-          <el-button type="text" size="small"><i class="iconfont icon-edit"></i>编辑</el-button>
-          <el-button type="text" size="small"><i class="iconfont icon-delete"></i>删除</el-button>
+          <el-button @click="handleDetail(scope.row)" type="text" size="small">
+            <i class="iconfont icon-details"></i>查看</el-button>
+          <el-button @click="handleEdit(scope.row)" type="text" size="small">
+            <i class="iconfont icon-edit"></i>编辑</el-button>
+          <el-button @click="handleDelete(scope.row)" type="text" size="small">
+            <i class="iconfont icon-delete"></i>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import { getUserList } from "../../http/user";
+import { getUserList, deleteUserById } from "../../http/user";
 export default {
   name: "UserList",
   data() {
@@ -64,7 +67,8 @@ export default {
       const keys = Object.keys(this.formInline);
       const query = {};
       keys.forEach(key => {
-        this.formInline[key] && (query[key] = (this.formInline[key] + '').trim());
+        this.formInline[key] &&
+          (query[key] = (this.formInline[key] + "").trim());
       });
       getUserList(query)
         .then(res => {
@@ -81,8 +85,43 @@ export default {
     formatStatus(row, column, cellValue) {
       return cellValue === "ok" ? "正常" : "已禁用";
     },
-    handleClick(row) {
+    handleDetail(row) {
+      // 查看详情
       console.log("当前row数据：", row);
+      this.$router.push(`/main/user/setting/${row.id}`);
+    }, // 删除
+    handleDelete(row) {
+      console.log("row:", row);
+      this.$confirm("此操作将永久删除该用户, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteUserById(row.id)
+            .then(res => {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              this.tableData = this.tableData.filter(
+                item => item.id !== row.id
+              );
+              this.total = this.tableData.length;
+            })
+            .catch(err => {
+              this.$message({
+                type: "warning",
+                message: err.message
+              });
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    handleEdit(row) {
+      // 修改-跳转至修改路由
     }
   }
 };
