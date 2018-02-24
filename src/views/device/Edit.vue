@@ -50,10 +50,10 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="参数(名称=>描述)">
+      <el-form-item label="参数(名称=>描述)" v-if="!$route.params.devId">
         &nbsp;
       </el-form-item>
-      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
+      <el-form-item style="text-align:left;"  v-if="!$route.params.devId" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
         <el-input v-model="devArg.name" style="width:25%;margin-right: 1px;"></el-input>=>
         <el-input v-model="devArg.desc" style="width:25%;margin-right: 1px;"></el-input>
         <el-button @click.prevent="device.args.length > 1 && removeDevArg(devArg, index)" type="danger">删除</el-button>
@@ -75,6 +75,7 @@ import {
   addDevice
 } from "../../http/device";
 import { getDevTypeList } from "../../http/devType";
+import { getDevArgList } from "../../http/devArg";
 import { getUserList } from "../../http/user";
 import { mapState } from "vuex";
 export default {
@@ -98,8 +99,14 @@ export default {
     if (!this.$route.params.devId) return;
     getDeviceDetail(this.$route.params.devId)
       .then(res => {
-        console.log("设备详情", res);
-        this.device = res;
+        getDevArgList({ deviceId: res.id })
+          .then(argRes => {
+            this.device = Object.assign({}, res, { args: argRes.rows });
+            console.log('数据回显', this.device)
+          })
+          .catch(err => {
+            this.$message.error(err.message);
+          });
       })
       .catch(err => {
         this.$message.error(err.message);
@@ -186,9 +193,11 @@ export default {
     saveDeviceInfo(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          this.device.code += "";
           if (this.device.id) {
             // 修改保存
-            updateUserInfo(this.device)
+            console.log('修改前数据', this.device)
+            updateDeviceInfo(this.device)
               .then(res => {
                 this.$router.back();
               })
@@ -197,8 +206,6 @@ export default {
                 this.$message.error(err.message);
               });
           } else {
-            console.log("this.device", this.device);
-            return;
             // 新增保存
             addDevice(this.device)
               .then(res => {
