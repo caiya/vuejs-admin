@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-    <el-form :label-position="labelPosition" label-width="115px" :model="device" :rules="rules" ref="device">
+    <el-form :label-position="labelPosition" label-width="125px" :model="device" :rules="rules" ref="device">
       <el-form-item label="设备名称" prop="name">
         <el-input v-model="device.name"></el-input>
       </el-form-item>
@@ -50,18 +50,19 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="设备参数">
+      <el-form-item label="参数(名称=>描述)">
         &nbsp;
       </el-form-item>
-      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.devArgs" :key="index" :prop="'devArgs.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
-        参数名称：<el-input v-model="devArg.name" style="width:25%;margin-right: 10px;"></el-input>
-        参数描述：<el-input v-model="devArg.desc" style="width:25%;margin-right: 10px;"></el-input>
-        <el-button @click.prevent="removeDevArg(devArg, index)" type="danger">删除</el-button>
-        <el-button @click.prevent="addDevArg" type="success" v-if="device.devArgs.length == (index + 1)">添加</el-button>
+      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
+        <el-input v-model="devArg.name" style="width:25%;margin-right: 1px;"></el-input>=>
+        <el-input v-model="devArg.desc" style="width:25%;margin-right: 1px;"></el-input>
+        <el-button @click.prevent="device.args.length > 1 && removeDevArg(devArg, index)" type="danger">删除</el-button>
+        <el-button @click.prevent="addDevArg" type="success" v-if="device.args.length == (index + 1)">添加</el-button>
       </el-form-item>
       <el-form-item style="text-align:left;margin-top:40px;">
         <el-button type="primary" @click="saveDeviceInfo('device')">保存设置</el-button>
         <el-button @click="back" type="info">返回上级</el-button>
+        <el-button @click="clearForm('device')" type="warning">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -105,26 +106,12 @@ export default {
       });
   },
   data() {
-    const checkAge = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error("年龄不能为空"));
-      }
-      if (!Number.isInteger(value)) {
-        callback(new Error("请输入数字值"));
-      } else {
-        if (value < 10) {
-          callback(new Error("必须年满10岁"));
-        } else {
-          callback();
-        }
-      }
-    };
     return {
       users: [],
       devTypes: [],
       labelPosition: "right",
       device: {
-        devArgs: [{}],
+        args: [{}],
         status: "online",
         pic: "" // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
       },
@@ -138,25 +125,36 @@ export default {
             trigger: "blur,change"
           }
         ],
-        age: [
-          {
-            validator: checkAge,
-            trigger: "blur,change"
-          }
+        code: [
+          { required: true, message: "请输入设备编号", trigger: "blur,change" }
         ],
         email: [
-          { required: true, message: "请输入邮箱地址", trigger: "blur,change" },
+          { required: true, message: "请输入邮箱地址", trigger: "blur" },
           {
             type: "email",
             message: "请输入正确的邮箱地址",
             trigger: "blur,change"
           }
         ],
-        mobile: [
+        type: [
           {
             required: true,
-            message: "联系方式不能为空",
-            trigger: "blur,change"
+            message: "设备类别不能为空",
+            trigger: "blur, change"
+          }
+        ],
+        userId: [
+          {
+            required: true,
+            message: "所属用户不能为空",
+            trigger: "blur, change"
+          }
+        ],
+        prodDate: [
+          {
+            required: true,
+            message: "出场日期不能为空",
+            trigger: "blur, change"
           }
         ]
       }
@@ -199,8 +197,10 @@ export default {
                 this.$message.error(err.message);
               });
           } else {
+            console.log("this.device", this.device);
+            return;
             // 新增保存
-            addUser(this.device)
+            addDevice(this.device)
               .then(res => {
                 this.$message({
                   type: "success",
@@ -216,11 +216,17 @@ export default {
       });
     },
     removeDevArg(devArg, index) {
-      console.log('当前arg：', devArg);
-      this.device.devArgs.splice(index, 1);
+      this.device.args.splice(index, 1);
     },
     addDevArg() {
-      this.device.devArgs.push({});
+      this.device.args.push({});
+    },
+    clearForm(form) {
+      this.device.args = this.device.args.map(item => {
+        item.desc = "";
+        return item;
+      });
+      this.$refs[form].resetFields();
     }
   }
 };
@@ -228,7 +234,7 @@ export default {
 
 <style scoped>
 .form {
-  width: 50%;
+  width: 52%;
   /* margin: 0 auto; */
 }
 .avatar-uploader .el-upload {
