@@ -54,15 +54,15 @@ const router = new Router({
           activeItem: '3-1'
         },
       },{
-        path: 'device/add',
-        component: resolve => require(['@/views/device/Add'], resolve),
-        name: 'DeviceAdd',
+        path: 'device/edit/:devId?',
+        component: resolve => require(['@/views/device/Edit'], resolve),
+        name: 'DeviceEdit',
         meta: {
           requireAuth: true,
-          nav: '设备新增',
+          nav: '设备编辑',
           activeItem: '3-1'
         },
-      }, {
+      },{
         path: 'device/type',
         component: resolve => require(['@/views/devType/List'], resolve),
         name: 'DevTypeList',
@@ -71,7 +71,7 @@ const router = new Router({
           nav: '设备类别',
           activeItem: '3-2'
         },
-      },{
+      }, {
         path: '',   // 后台首页默认页
         component: resolve => require(['@/views/common/Welcome'], resolve),
         name: 'Welcome',

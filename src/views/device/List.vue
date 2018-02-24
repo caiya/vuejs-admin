@@ -8,7 +8,7 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button type="success" @click="$router.push('/main/device/add')">新增设备</el-button>
+        <el-button type="success" @click="$router.push('/main/device/edit')">新增设备</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%;" :highlight-current-row="true">
@@ -17,7 +17,7 @@
       <el-table-column prop="code" label="设备编号" align="center"></el-table-column>
       <el-table-column prop="key" label="设备激活码" align="center"></el-table-column>
       <el-table-column prop="pubNetAddr" label="公网地址" align="center"></el-table-column>
-      <el-table-column prop="type" label="设备分类" align="center"></el-table-column>
+      <el-table-column prop="deviceType.name" label="设备分类" align="center"></el-table-column>
       <el-table-column prop="model" label="设备型号" align="center"></el-table-column>
       <el-table-column prop="prodDate" label="出厂日期" align="center"></el-table-column>
       <el-table-column prop="status" label="设备状态" align="center"></el-table-column>

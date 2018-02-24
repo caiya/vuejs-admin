@@ -26,19 +26,19 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(response => {
   return response
 }, err => {
-  console.error('统一出错打印', err)
   if (err.response) {
     switch (err.response.status) {
       case 401:
-        // TODO 清除token信息
+        store.commit('LOGOUT')
         router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
         break
       case 403:
+        store.commit('LOGOUT')
         router.replace({ path: '/', query: { redirect: router.currentRoute.fullPath } })
         break
     }
   }
-  return Promise.reject(err)
+  return Promise.reject(new Error(err.response.data.error || err.message))
 })
 
 /**
