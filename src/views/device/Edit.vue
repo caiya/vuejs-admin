@@ -53,7 +53,7 @@
       <el-form-item label="参数(名称=>描述)" v-if="!$route.params.devId">
         &nbsp;
       </el-form-item>
-      <el-form-item style="text-align:left;"  v-if="!$route.params.devId" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
+      <el-form-item style="text-align:left;" v-if="!$route.params.devId" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
         <el-input v-model="devArg.name" style="width:25%;margin-right: 1px;"></el-input>=>
         <el-input v-model="devArg.desc" style="width:25%;margin-right: 1px;"></el-input>
         <el-button @click.prevent="device.args.length > 1 && removeDevArg(devArg, index)" type="danger">删除</el-button>
@@ -102,7 +102,6 @@ export default {
         getDevArgList({ deviceId: res.id })
           .then(argRes => {
             this.device = Object.assign({}, res, { args: argRes.rows });
-            console.log('数据回显', this.device)
           })
           .catch(err => {
             this.$message.error(err.message);
@@ -196,7 +195,6 @@ export default {
           this.device.code += "";
           if (this.device.id) {
             // 修改保存
-            console.log('修改前数据', this.device)
             updateDeviceInfo(this.device)
               .then(res => {
                 this.$router.back();

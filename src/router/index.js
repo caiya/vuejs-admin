@@ -72,6 +72,15 @@ const router = new Router({
           activeItem: '3-2'
         },
       }, {
+        path: 'device/arg',
+        component: resolve => require(['@/views/devArg/List'], resolve),
+        name: 'DevArgList',
+        meta: {
+          requireAuth: true,
+          nav: '设备参数',
+          activeItem: '3-3'
+        },
+      }, {
         path: '',   // 后台首页默认页
         component: resolve => require(['@/views/common/Welcome'], resolve),
         name: 'Welcome',
