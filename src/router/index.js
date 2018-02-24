@@ -32,7 +32,8 @@ const router = new Router({
         name: 'UserList',
         meta: {
           requireAuth: true,
-          nav: '用户管理'
+          nav: '用户管理',
+          activeItem: '1-1'
         },
       }, {
         path: 'user/setting/:userId?',
@@ -40,7 +41,8 @@ const router = new Router({
         component: resolve => require(['@/views/user/Setting'], resolve),
         meta: {
           requireAuth: true,
-          nav: '资料设置'
+          nav: '资料设置',
+          activeItem: '1-2'
         },
       }, {
         path: 'device',
@@ -48,7 +50,8 @@ const router = new Router({
         name: 'Device',
         meta: {
           requireAuth: true,
-          nav: '设备列表'
+          nav: '设备列表',
+          activeItem: '3-1'
         },
       },{
         path: 'device/add',
@@ -56,7 +59,8 @@ const router = new Router({
         name: 'DeviceAdd',
         meta: {
           requireAuth: true,
-          nav: '设备新增'
+          nav: '设备新增',
+          activeItem: '3-1'
         },
       }, {
         path: 'device/type',
@@ -64,7 +68,8 @@ const router = new Router({
         name: 'DevTypeList',
         meta: {
           requireAuth: true,
-          nav: '设备类别'
+          nav: '设备类别',
+          activeItem: '3-2'
         },
       },{
         path: '',   // 后台首页默认页
