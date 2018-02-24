@@ -29,14 +29,14 @@
       <el-pagination layout="prev, pager, next, jumper, ->, sizes, total" :total="tableData.length" :background="true" @current-change="pageChange" @size-change="pageSizeChange" :current-page="currentPage" :page-size="pageSize" :page-sizes="[5, 10, 20, 50, 100]"></el-pagination>
     </div>
     <el-dialog title="设备参数详情" :visible.sync="centerDialogVisible" width="30%">
-      <el-form :model="currentDevArg">
-        <el-form-item label="设备参数">
+      <el-form :model="currentDevArg" :rules="rules" ref="currentDevArg">
+        <el-form-item label="设备参数" prop="name">
           <el-input v-model="currentDevArg.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="参数描述">
+        <el-form-item label="参数描述" prop="desc">
           <el-input v-model="currentDevArg.desc" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="所属设备">
+        <el-form-item label="所属设备" >
           <el-select v-model="currentDevArg.device.id" placeholder="请选择" filterable style="display:block;">
             <el-option v-for="item in devices" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -73,10 +73,27 @@ export default {
       centerDialogVisible: false,
       currentDevArg: {
         device: {
-          name: ""
+          name: "",
+          id: ""
         }
       },
-      devices: []
+      devices: [],
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "参数名称不能为空",
+            trigger: "blur, change"
+          }
+        ],
+        desc: [
+          {
+            required: true,
+            message: "参数描述不能为空",
+            trigger: "blur, change"
+          }
+        ]
+      }
     };
   },
   mounted() {
@@ -153,49 +170,56 @@ export default {
     },
     clearForm() {
       this.currentDevArg = {
-        device: {}
+        device: {
+          id: "",
+          name: ""
+        }
       };
     },
     addLocalData(newData) {
       this.tableData.push(newData);
     },
     save() {
-      // 保存修改
-      if (this.currentDevArg.id) {
-        // 修改
-        this.currentDevArg.deviceId = this.currentDevArg.device.id;
-        updateDevArgInfo(this.currentDevArg)
-          .then(res => {
-            this.$message({
-              type: "success",
-              message: "修改成功!"
-            });
-            this.centerDialogVisible = false;
-            this.clearForm();
-            this.fetchData();
-          })
-          .catch(err => {
-            this.$message.error(err.message);
-          });
-      } else {
-        // 新增
-        this.currentDevArg.deviceId = this.currentDevArg.device.id;
-        delete this.currentDevArg.device;
-        delete this.currentDevArg.id;
-        addDevArg(this.currentDevArg)
-          .then(res => {
-            this.$message({
-              type: "success",
-              message: "新增成功!"
-            });
-            this.clearForm();
-            this.centerDialogVisible = false;
-            this.fetchData();
-          })
-          .catch(err => {
-            this.$message.error(err.message);
-          });
-      }
+      this.$refs["currentDevArg"].validate(valid => {
+        if (valid) {
+          // 保存修改
+          if (this.currentDevArg.id) {
+            // 修改
+            this.currentDevArg.deviceId = this.currentDevArg.device.id;
+            updateDevArgInfo(this.currentDevArg)
+              .then(res => {
+                this.$message({
+                  type: "success",
+                  message: "修改成功!"
+                });
+                this.centerDialogVisible = false;
+                this.clearForm();
+                this.fetchData();
+              })
+              .catch(err => {
+                this.$message.error(err.message);
+              });
+          } else {
+            // 新增
+            this.currentDevArg.deviceId = this.currentDevArg.device.id;
+            delete this.currentDevArg.device;
+            delete this.currentDevArg.id;
+            addDevArg(this.currentDevArg)
+              .then(res => {
+                this.$message({
+                  type: "success",
+                  message: "新增成功!"
+                });
+                this.clearForm();
+                this.centerDialogVisible = false;
+                this.fetchData();
+              })
+              .catch(err => {
+                this.$message.error(err.message);
+              });
+          }
+        }
+      });
     }
   }
 };
