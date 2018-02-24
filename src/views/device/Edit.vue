@@ -50,14 +50,14 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="参数(名称=>描述)" v-if="!$route.params.devId">
+      <el-form-item label="参数(名称=>描述)">
         &nbsp;
       </el-form-item>
-      <el-form-item style="text-align:left;" v-if="!$route.params.devId" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
-        <el-input v-model="devArg.name" style="width:25%;margin-right: 1px;"></el-input>=>
-        <el-input v-model="devArg.desc" style="width:25%;margin-right: 1px;"></el-input>
-        <el-button @click.prevent="device.args.length > 1 && removeDevArg(devArg, index)" type="danger">删除</el-button>
-        <el-button @click.prevent="addDevArg" type="success" v-if="device.args.length == (index + 1)">添加</el-button>
+      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.args" :label="'参数 ' + (index+1)" :key="index" :prop="'args.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
+        <el-input v-model="devArg.name" style="width:25%;margin-right: 1px;" :readonly="$route.params.devId"></el-input>=>
+        <el-input v-model="devArg.desc" style="width:25%;margin-right: 1px;" :readonly="$route.params.devId"></el-input>
+        <el-button v-if="!!!$route.params.devId" @click.prevent="device.args.length > 1 && removeDevArg(devArg, index)" type="danger">删除</el-button>
+        <el-button @click.prevent="addDevArg" type="success" v-if="!$route.params.devId && device.args.length == (index + 1)">添加</el-button>
       </el-form-item>
       <el-form-item style="text-align:left;margin-top:40px;">
         <el-button type="primary" @click="saveDeviceInfo('device')">保存设置</el-button>
