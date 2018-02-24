@@ -53,10 +53,11 @@
       <el-form-item label="设备参数">
         &nbsp;
       </el-form-item>
-      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.devArgs" :key="devArg.key" :prop="'devArgs.' + index + '.value'" :rules="{required: true, message: '参数不能为空', trigger: 'blur'}">
-        参数名称：<el-input v-model="devArg.name" style="width:220px;margin-right: 10px;"></el-input>
-        参数描述：<el-input v-model="devArg.desc" style="width:220px;margin-right: 10px;"></el-input>
-        <el-button @click.prevent="removeDevArg(devArg)" type="danger">删除</el-button>
+      <el-form-item style="text-align:left;" v-for="(devArg, index) in device.devArgs" :key="index" :prop="'devArgs.' + index + '.name'" :rules="{required: true, message: '参数名不能为空', trigger: 'blur'}">
+        参数名称：<el-input v-model="devArg.name" style="width:25%;margin-right: 10px;"></el-input>
+        参数描述：<el-input v-model="devArg.desc" style="width:25%;margin-right: 10px;"></el-input>
+        <el-button @click.prevent="removeDevArg(devArg, index)" type="danger">删除</el-button>
+        <el-button @click.prevent="addDevArg" type="success" v-if="device.devArgs.length == (index + 1)">添加</el-button>
       </el-form-item>
       <el-form-item style="text-align:left;margin-top:40px;">
         <el-button type="primary" @click="saveDeviceInfo('device')">保存设置</el-button>
@@ -123,10 +124,7 @@ export default {
       devTypes: [],
       labelPosition: "right",
       device: {
-        devArgs: [{
-          key: '1',
-          value: '测试'
-        }],
+        devArgs: [{}],
         status: "online",
         pic: "" // 如果没有改属性，那么新增页下的头像始终不会显示，因为v-if检测不到空对象中的某个属性
       },
@@ -168,9 +166,6 @@ export default {
     ...mapState["user"]
   },
   methods: {
-    removeDevArg(devArg){
-      console.log('devArg', devArg);
-    },
     back() {
       this.$router.back();
     },
@@ -219,6 +214,13 @@ export default {
           }
         }
       });
+    },
+    removeDevArg(devArg, index) {
+      console.log('当前arg：', devArg);
+      this.device.devArgs.splice(index, 1);
+    },
+    addDevArg() {
+      this.device.devArgs.push({});
     }
   }
 };
