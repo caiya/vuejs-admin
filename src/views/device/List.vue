@@ -24,7 +24,7 @@
       <el-table-column prop="runTime" label="设备运行时间" align="center"></el-table-column>
       <el-table-column label="操作" width="180" align="center">
         <template slot-scope="scope">
-          <el-button @click="$router.push('/main/device/' + scope.row.id)" type="text" size="small">
+          <el-button @click="$router.push('/main/device/edit/' + scope.row.id)" type="text" size="small">
             <i class="iconfont icon-details"></i>查看</el-button>
           <el-button @click="handleDelete(scope.row)" type="text" size="small">
             <i class="iconfont icon-delete"></i>删除</el-button>

@@ -37,7 +37,7 @@
       </el-form-item>
       <el-form-item style="text-align:left;">
         <el-button type="primary" @click="saveUserInfo('userInfo')">保存设置</el-button>
-        <el-button @click="back">返回上级</el-button>
+        <el-button @click="back" type="info">返回上级</el-button>
       </el-form-item>
     </el-form>
   </div>
