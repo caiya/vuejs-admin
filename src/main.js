@@ -6,6 +6,7 @@ import router from './router'
 import { axios } from './http/base'
 
 import ElementUI from 'element-ui'
+import { Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import './assets/fonts/iconfont.css'
@@ -13,6 +14,10 @@ import './assets/fonts/iconfont.css'
 import store from './store'
 
 Vue.use(ElementUI)
+Vue.message = Message   // 绑定之后在mqtt.js中便可以直接使用Message组件
+
+// 引入mqtt
+import './mq'
 
 Vue.config.productionTip = false
 

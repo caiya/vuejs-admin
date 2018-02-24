@@ -5,7 +5,9 @@ const state = {
     token: localStorage.getItem('token') || ''
 }
 
-const actions = {}
+const actions = {
+
+}
 
 const mutations = {
     [TYPES.LOGIN]: (state, loginData) => {
@@ -22,7 +24,9 @@ const mutations = {
     }
 }
 
-const getters = {}
+const getters = {
+
+}
 
 export default {
     state,

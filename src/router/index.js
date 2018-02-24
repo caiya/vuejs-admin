@@ -80,6 +80,9 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  if (to.path === '/' && store.state.user.token) {
+    return next('/main')
+  }
   if (to.meta.requireAuth) {    // 如果需要拦截
     if (store.state.user.token) {
       next()
