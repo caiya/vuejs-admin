@@ -41,8 +41,13 @@ npm run build
 npm run build --report
 ```
 
-## 效果图
+## 测试账号
 
+caiya928@aliyun.com/admin
+
+ps: 大家别乱搞啊，要不服务就关停了
+
+## 效果图
 
 ![用户登录][https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-login.png]
 
