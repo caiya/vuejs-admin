@@ -62,7 +62,7 @@
       <el-form-item style="text-align:left;margin-top:40px;">
         <el-button type="primary" @click="saveDeviceInfo('device')">保存设置</el-button>
         <el-button @click="back" type="info">返回上级</el-button>
-        <el-button @click="clearForm('device')" type="warning">重置</el-button>
+        <el-button v-if="!$route.params.devId" @click="clearForm('device')" type="warning">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
