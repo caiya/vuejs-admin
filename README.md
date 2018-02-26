@@ -14,14 +14,14 @@
 
 ## 目前进展
 
-已完成：
+已完成
 
 > * 用户登录、退出
 > * 用户模块：用户列表（带分页）、新增、删除、编辑、头像上传等
 > * 个人资料编辑设置
 > * 设备模块：设备列表（带分页）、新增、删除、编辑等
 
-TODO:
+TODO
 
 > 其余
 
@@ -43,24 +43,18 @@ npm run build --report
 
 ## 效果图
 
-用户登录：
-![https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-login.png]
 
-主页（登录后）：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-main.png)
+!(用户登录)[https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-login.png]
 
-用户列表页：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-users.png)
+![主页（登录后）](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-main.png)
 
-用户新增&编辑：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-user-add.png)
+![用户列表页](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-users.png)
 
-设备列表：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-devices.png)
+![用户新增&编辑](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-user-add.png)
 
-设备新增&编辑：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-device-edit.png)
+![设备列表](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-devices.png)
 
-设备类型：
-![](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-devtypes.png)
+![设备新增&编辑](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-device-edit.png)
+
+![设备类型](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-devtypes.png)
 
