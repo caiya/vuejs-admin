@@ -80,7 +80,16 @@ const router = new Router({
           nav: '设备参数',
           activeItem: '3-3'
         },
-      }, {
+      },{
+        path: 'device/monitor',
+        component: resolve => require(['@/views/device/Monitor'], resolve),
+        name: 'DevMonitor',
+        meta: {
+          requireAuth: true,
+          nav: '设备监控',
+          activeItem: '3-4'
+        },
+      },  {
         path: '',   // 后台首页默认页
         component: resolve => require(['@/views/common/Welcome'], resolve),
         name: 'Welcome',
