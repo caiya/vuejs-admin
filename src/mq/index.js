@@ -2,7 +2,7 @@ import mqtt from "mqtt"
 import Vue from "vue"
 import store from '../store'
 
-import { Message } from 'element-ui'
+import { Notification } from 'element-ui'
 
 let client = null
 
@@ -20,8 +20,9 @@ export const startSub = () => {
   }).on("message", (topic, message) => {
     // message is Buffer
     if (topic + '' === 'msgNotice') {   // 消息类通知主题
-      Message({
-        type: "warning",
+      Notification({
+        title: '通知',
+        type: "success",
         message: JSON.parse(message.toString()).msg
       })
     } else {    // 设备相关主题，这里将各个模块消息写入各个模块的vuex state中，然后各个模块再getter取值
