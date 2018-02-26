@@ -3,7 +3,15 @@
     <el-row>
       <el-col :span="12">
         <div class="grid-content bg-purple">
-          设备参数列表
+          <el-container>
+            <el-header>
+              <el-container>
+                <el-aside width="50%">Aside</el-aside>
+                <el-main>Main</el-main>
+              </el-container>
+            </el-header>
+            <el-main>Main</el-main>
+          </el-container>
         </div>
       </el-col>
       <el-col :span="12">
@@ -29,8 +37,7 @@ export default {
   data() {
     return {
       device: {
-        pic:
-          ""
+        pic: ""
       }
     };
   }
@@ -53,29 +60,5 @@ export default {
 }
 .grid-content {
   min-height: 300px;
-  display: -webkit-box;
-  -webkit-box-orient: horizontal;
-  -webkit-box-pack: center;
-  -webkit-box-align: center;
-
-  display: -moz-box;
-  -moz-box-orient: horizontal;
-  -moz-box-pack: center;
-  -moz-box-align: center;
-
-  display: -o-box;
-  -o-box-orient: horizontal;
-  -o-box-pack: center;
-  -o-box-align: center;
-
-  display: -ms-box;
-  -ms-box-orient: horizontal;
-  -ms-box-pack: center;
-  -ms-box-align: center;
-
-  display: box;
-  box-orient: horizontal;
-  box-pack: center;
-  box-align: center;
 }
 </style>
