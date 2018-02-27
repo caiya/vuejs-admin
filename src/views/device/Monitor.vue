@@ -1,9 +1,9 @@
 <template>
   <div class="monitor">
-    <el-row type="flex" justify="space-around" class="mgb-20">
+    <el-row type="flex" justify="space-around" class="mrgB-20">
       <el-col :span="11">
         <div class="grid-content bg-purple-light ali-center">
-          <el-row>
+          <el-row type="flex" style="justify-content:center; align-items: flex-start;">
             <el-col :span="24">
               <el-form :inline="true" :model="device" class="demo-form-inline">
                 <el-form-item label="设备">
@@ -27,7 +27,7 @@
               <el-table-column prop="name" label="参数名称" width="180" align="center"></el-table-column>
               <el-table-column prop="desc" label="参数描述" align="center"></el-table-column>
             </el-table>
-            <el-pagination v-show="devArgs.length > 5" layout="prev, pager, next, jumper, ->, total" :total="devArgs.length" :background="true" @current-change="pageChange" @size-change="pageSizeChange" :current-page="currentPage" :page-size="pageSize"></el-pagination>
+            <el-pagination class="mrgT-20" v-show="devArgs.length > 5" layout="prev, pager, next, jumper, ->, total" :total="devArgs.length" :background="true" @current-change="pageChange" @size-change="pageSizeChange" :current-page="currentPage" :page-size="pageSize"></el-pagination>
           </el-row>
         </div>
       </el-col>
@@ -45,7 +45,7 @@
       </el-col>
       <el-col :span="11">
         <el-row type="flex" class="grid-content bg-purple-light" style="justify-content:center; align-items: center;">
-          <chart :options="monitorArgs"></chart>
+          
         </el-row>
       </el-col>
     </el-row>
@@ -77,19 +77,6 @@ export default {
     for (var i = 0; i < 1000; i++) {
       data.push(randomData());
     }
-    setInterval(function() {
-      for (var i = 0; i < 5; i++) {
-        data.shift();
-        data.push(randomData());
-      }
-      this.monitorArgs = {
-        series: [
-          {
-            data: data
-          }
-        ]
-      };
-    }, 1000);
     return {
       devices: [], // 下拉框所有设备
       device: {
@@ -103,7 +90,7 @@ export default {
       pageSize: 5, // table分页
       monitorArgs: {
         title: {
-          text: "动态数据 + 时间坐标轴1"
+          text: "测量点实时数据展示"
         },
         tooltip: {
           trigger: "axis",
@@ -210,8 +197,11 @@ export default {
   height: 100%;
   margin-top: 5px;
 }
-.mgb-20 {
+.mrgB-20 {
   margin-bottom: 20px;
+}
+.mrgT-20{
+  margin-top: 20px;
 }
 .bg-purple {
   background: #d3dce6;
