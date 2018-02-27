@@ -22,7 +22,7 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-table :data="devArgs.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true" @row-click="rowClick">
+            <el-table :border="true" :data="devArgs.slice((currentPage-1)*pageSize,currentPage*pageSize)" stripe style="width: 100%" :highlight-current-row="true" @row-click="rowClick">
               <el-table-column prop="id" label="参数编号" width="180" align="center"></el-table-column>
               <el-table-column prop="name" label="参数名称" width="180" align="center"></el-table-column>
               <el-table-column prop="desc" label="参数描述" align="center"></el-table-column>
@@ -33,19 +33,21 @@
       </el-col>
       <el-col :span="11">
         <el-row type="flex" class="grid-content bg-purple-light" style="justify-content:center; align-items: center;">
-          <img :src="currentDevPic" :alt="device.id ? '该设备尚未添加原理图' : '请先选择设备'">
+          <img :src="currentDevPic" :alt="device.id ? '该设备尚未添加原理图' : '请先选择设备，再查看设备原理图'">
         </el-row>
       </el-col>
     </el-row>
     <el-row type="flex" justify="space-around">
       <el-col :span="11">
         <el-row type="flex" class="grid-content bg-purple-light" style="justify-content:center; align-items: center;">
-          <chart :options="monitorArgs"></chart>
+          <chart :options="monitorArgs" v-if="monitorArgsVisible"></chart> 
+          <span v-else>请先选择要查看的设备，并选中要查看的参数（确保该参数有上传数值？）</span>
+          <!-- <span v-else>该参数暂未收到统计数值</span> -->
         </el-row>
       </el-col>
       <el-col :span="11">
         <el-row type="flex" class="grid-content bg-purple-light" style="justify-content:center; align-items: center;">
-          
+
         </el-row>
       </el-col>
     </el-row>
@@ -55,57 +57,47 @@
 <script>
 import { getDeviceList } from "../../http/device";
 import { getDevArgList } from "../../http/devArg";
+
+import { mapGetters } from "vuex";
+
 export default {
   name: "DevMonitor",
   data() {
-    function randomData() {
-      now = new Date(+now + oneDay);
-      value = value + Math.random() * 21 - 10;
-      return {
-        name: now.toString(),
-        value: [
-          [now.getFullYear(), now.getMonth() + 1, now.getDate()].join("/"),
-          Math.round(value)
-        ]
-      };
-    }
-
-    var data = [];
-    var now = +new Date(1997, 9, 3);
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 1000; i++) {
-      data.push(randomData());
-    }
     return {
       devices: [], // 下拉框所有设备
       device: {
         id: "", // 当前选中的设备id
         argName: "", // 搜索框中的设备参数名称
         argId: "", // 当前选中的参数id
-        pic: "" // 当前选中设备的pic原理图
+        argName: "", // 当前选中的参数名称
+        pic: "", // 当前选中设备的pic原理图
       },
+      monitorArgsVisible: false,    // monitorArgs图标可见性
       devArgs: [], // table中的所有设备参数
       currentPage: 1, // table分页
       pageSize: 5, // table分页
-      monitorArgs: {
+      seriesData: []
+    };
+  },
+  computed: {
+    ...mapGetters(["doneMsg"]),
+    currentDevPic() {
+      const dev = this.devices.find(item => item.id === this.device.id);
+      if (dev) return dev.pic;
+      return "";
+    },
+    monitorArgs() {
+      return {
         title: {
+          show: true,
+          left: "center",
           text: "测量点实时数据展示"
         },
         tooltip: {
           trigger: "axis",
           formatter: function(params) {
             params = params[0];
-            var date = new Date(params.name);
-            return (
-              date.getDate() +
-              "/" +
-              (date.getMonth() + 1) +
-              "/" +
-              date.getFullYear() +
-              " : " +
-              params.value[1]
-            );
+            return params.value[2] + "：" + params.value[1];
           },
           axisPointer: {
             animation: false
@@ -126,21 +118,24 @@ export default {
         },
         series: [
           {
-            name: "模拟数据",
             type: "line",
             showSymbol: false,
-            hoverAnimation: false,
-            data: data
+            hoverAnimation: true,
+            data: this.doneMsg.filter(
+              item => {
+                // 仅显示当前选择的设备下的选中的参数的历史值
+                const ret = item.value[2] === this.device.argName && (item.value[3] + '' === this.device.id + '');
+                if (ret) {
+                  this.monitorArgsVisible = true;
+                } else {
+                  this.monitorArgsVisible = false;
+                }
+                return ret
+              }
+            )
           }
         ]
-      }
-    };
-  },
-  computed: {
-    currentDevPic() {
-      const dev = this.devices.find(item => item.id === this.device.id);
-      if (dev) return dev.pic;
-      return "";
+      };
     }
   },
   methods: {
@@ -182,6 +177,7 @@ export default {
     },
     rowClick(row, event, column) {
       this.device.argId = row.id;
+      this.device.argName = row.name;
       console.log(this.device);
     }
   },
@@ -200,7 +196,7 @@ export default {
 .mrgB-20 {
   margin-bottom: 20px;
 }
-.mrgT-20{
+.mrgT-20 {
   margin-top: 20px;
 }
 .bg-purple {
@@ -215,7 +211,7 @@ export default {
 .ali-left {
   text-align: left;
 }
-.ali-center{
+.ali-center {
   text-align: center;
 }
 img {
@@ -228,7 +224,7 @@ img {
 .current-row {
   background-color: aqua;
 }
-.echarts{
+.echarts {
   margin: 0 auto;
 }
 </style>

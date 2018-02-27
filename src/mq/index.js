@@ -18,6 +18,7 @@ export const startSub = () => {
     client.end()
     client.reconnect()
   }).on("message", (topic, message) => {
+    console.log('topic', topic);
     // message is Buffer
     if (topic + '' === 'msgNotice') {   // 消息类通知主题
       Notification({
@@ -26,7 +27,13 @@ export const startSub = () => {
         message: JSON.parse(message.toString()).msg
       })
     } else {    // 设备相关主题，这里将各个模块消息写入各个模块的vuex state中，然后各个模块再getter取值
-
+      const devId = topic.substring(9);
+      const arg = {
+        devId,
+        msg: message.toString()
+      }
+      console.log('收到设备上传消息：', arg);
+      store.commit('setDevArgsMsg', arg);
     }
   })
 

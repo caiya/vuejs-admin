@@ -20,6 +20,9 @@ Vue.component('chart', ECharts)
 
 import store from './store'
 
+import moment from 'moment'
+Vue.prototype.$moment = moment
+
 Vue.use(ElementUI)
 
 // 引入mqtt
