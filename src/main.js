@@ -10,6 +10,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 import './assets/fonts/iconfont.css'
 
+import ECharts from 'vue-echarts/components/ECharts'
+// import ECharts modules manually to reduce bundle size
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/tooltip'
+
+// register component to use
+Vue.component('chart', ECharts)
+
 import store from './store'
 
 Vue.use(ElementUI)

@@ -147,6 +147,7 @@ export default {
 
 .el-aside {
   color: #333;
+  flex-shrink: 0;
 }
 .navBar {
   background-color: #fff;
