@@ -40,7 +40,7 @@
     <el-row type="flex" justify="space-around">
       <el-col :span="11">
         <el-row type="flex" class="grid-content bg-purple-light" style="justify-content:center; align-items: center;">
-          <chart :options="monitorArgs" v-if="monitorArgsVisible"></chart> 
+          <chart :options="monitorArgs" v-if="device.id && device.argId"></chart> 
           <span v-else>请先选择要查看的设备，并选中要查看的参数（确保该参数有上传数值？）</span>
           <!-- <span v-else>该参数暂未收到统计数值</span> -->
         </el-row>
@@ -72,7 +72,6 @@ export default {
         argName: "", // 当前选中的参数名称
         pic: "", // 当前选中设备的pic原理图
       },
-      monitorArgsVisible: false,    // monitorArgs图标可见性
       devArgs: [], // table中的所有设备参数
       currentPage: 1, // table分页
       pageSize: 5, // table分页
@@ -124,13 +123,7 @@ export default {
             data: this.doneMsg.filter(
               item => {
                 // 仅显示当前选择的设备下的选中的参数的历史值
-                const ret = item.value[2] === this.device.argName && (item.value[3] + '' === this.device.id + '');
-                if (ret) {
-                  this.monitorArgsVisible = true;
-                } else {
-                  this.monitorArgsVisible = false;
-                }
-                return ret
+                return item.value[2] === this.device.argName && (item.value[3] + '' === this.device.id + '');
               }
             )
           }

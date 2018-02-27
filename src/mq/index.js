@@ -16,7 +16,7 @@ export const startSub = () => {
   }).on('error', err => {
     console.log("链接mqtt报错", err)
     client.end()
-    client.reconnect()
+    client.reconnect()  
   }).on("message", (topic, message) => {
     console.log('topic', topic);
     // message is Buffer
