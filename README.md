@@ -66,3 +66,7 @@ ps: 大家别乱搞啊，要不服务就关停了
 
 ![设备类型](https://raw.githubusercontent.com/caiya/imgs/2a33e9a186536903ac75bcae5cffb9274876462f/dev-devtypes.png)
 
+![设备监控](https://raw.githubusercontent.com/caiya/imgs/41f4765c49f7f1f93fed35b3a2099c8e16f1ba93/s-11.png)
+
+![实时展现](https://raw.githubusercontent.com/caiya/imgs/41f4765c49f7f1f93fed35b3a2099c8e16f1ba93/s-22.png)
+
