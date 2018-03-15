@@ -1,4 +1,6 @@
-# vuejs-admin（基于eggjs、vuejs、mqtt开发的设备管理系统，服务端接口地址：https://github.com/caiya/vuejs-admin-server）
+# vuejs-admin（基于eggjs、vuejs、mqtt开发的设备管理系统）
+
+服务端接口地址：https://github.com/caiya/vuejs-admin-server
 
 > * 用户模块（用户管理）
 > * 设备模块（设备管理、设备实时监控、设备参数记录、设备类别管理、参数管理等）
