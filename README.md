@@ -14,7 +14,7 @@
 关键字
 
 > * 前端：vuejs、vue-router、vuex、axios、element-ui、iconfont、mqttjs
-> * 后端：eggjs、mysql、OAuth2.0、restful、nginx、mqtt（负责前端所有消息推送&设备实时参数接收）
+> * 后端：eggjs、mysql、OAuth2.0、restful、nginx、mqtt、jwt（负责前端所有消息推送&设备实时参数接收）
 
 ## 目前进展
 
