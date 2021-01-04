@@ -10,7 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "element-ui": "^2.2.0",
     "moment": "^2.20.1",
     "mqtt": "^2.15.3",
